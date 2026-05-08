@@ -52,17 +52,17 @@ require_once __DIR__ . '/includes/header.php';
     <?php if ($succes): ?><div class="alert alert-success"><?= htmlspecialchars($succes) ?></div><?php endif; ?>
     <?php if ($erreur): ?><div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div><?php endif; ?>
 
-    <div class="table-container" style="margin-bottom:30px;">
-        <h3 style="color:#2e7d32; margin-bottom:20px;">✏️ Modifier mes informations</h3>
+    <div class="table-container mb-lg">
+        <h3 class="text-primary mb-md">✏️ Modifier mes informations</h3>
         <form method="POST">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div class="profile-grid">
                 <div class="form-group">
                     <label>Nom *</label>
                     <input type="text" name="nom" value="<?= htmlspecialchars($user['nom'] ?? '') ?>" required>
                 </div>
                 <div class="form-group">
                     <label>Email (non modifiable)</label>
-                    <input type="email" value="<?= htmlspecialchars($user['email']) ?>" disabled style="background:#f5f5f5;">
+                    <input type="email" value="<?= htmlspecialchars($user['email']) ?>" disabled class="input-disabled">
                 </div>
                 <div class="form-group">
                     <label>Téléphone</label>
@@ -86,9 +86,9 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 
     <div class="table-container">
-        <h3 style="color:#2e7d32; margin-bottom:20px;">📦 Mes Commandes</h3>
+        <h3 class="text-primary mb-md">📦 Mes Commandes</h3>
         <?php if (empty($commandes)): ?>
-            <p style="color:#888;">Aucune commande pour le moment.</p>
+            <p class="text-muted">Aucune commande pour le moment.</p>
         <?php else: ?>
             <table>
                 <thead>
@@ -101,7 +101,7 @@ require_once __DIR__ . '/includes/header.php';
                             <td><?= date('d/m/Y H:i', strtotime($cmd['date_commande'])) ?></td>
                             <td><?= number_format($cmd['total'], 2) ?> DT</td>
                             <td><?= htmlspecialchars($cmd['methode_paiement']) ?></td>
-                            <td style="color:#2e7d32; font-weight:bold;">
+                            <td class="font-bold text-success">
                                 <?= ucfirst(str_replace('_', ' ', $cmd['statut'])) ?>
                             </td>
                         </tr>

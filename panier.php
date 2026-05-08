@@ -58,12 +58,12 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
                                        name="quantites[<?= htmlspecialchars($cle) ?>]"
                                        value="<?= $item['quantite'] ?>"
                                        min="0" max="50"
-                                       style="width:65px; padding:5px; border:1px solid #ccc; border-radius:4px;">
+                                       class="cart-qty-input">
                             </td>
-                            <td><strong style="color:#2e7d32;"><?= number_format($item['prix'] * $item['quantite'], 2) ?> DT</strong></td>
+                            <td><strong class="text-primary"><?= number_format($item['prix'] * $item['quantite'], 2) ?> DT</strong></td>
                             <td>
                                 <a href="<?= BASE_URL ?>panier.php?supprimer=<?= urlencode($cle) ?>"
-                                   class="btn-danger" style="font-size:13px;"
+                                   class="btn-danger btn-icon"
                                    onclick="return confirm('Supprimer cet article ?')">🗑️</a>
                             </td>
                         </tr>
@@ -71,16 +71,16 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
                 </tbody>
             </table>
         </div>
-        <div style="text-align:right; margin-top:10px;">
+        <div class="text-right mt-lg">
             <button type="submit" name="maj_panier" class="btn-warning">🔄 Mettre à jour</button>
         </div>
         </form>
 
-        <div style="text-align:right; font-size:22px; font-weight:bold; color:#2e7d32; margin:20px 0;">
+        <div class="text-right font-bold mt-lg mb-lg" style="font-size:22px; color:var(--color-primary-dark);">
             Total : <?= number_format($total, 2) ?> DT
         </div>
-        <div style="text-align:right;">
-            <a href="<?= BASE_URL ?>produits.php" style="color:#888; margin-right:20px;">← Continuer mes achats</a>
+        <div class="text-right">
+            <a href="<?= BASE_URL ?>produits.php" class="text-muted mr-lg">← Continuer mes achats</a>
             <a href="<?= BASE_URL ?>commande.php" class="btn-primary" style="font-size:16px; padding:12px 30px;">
                 ✅ Passer la commande
             </a>

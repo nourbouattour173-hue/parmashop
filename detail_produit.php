@@ -8,10 +8,11 @@ if ($id === 0) { header("Location: " . BASE_URL . "produits.php"); exit(); }
 
 // Récupérer le produit
 $stmt = $pdo->prepare("
-    SELECT p.*, b.nom AS marque, c.nom AS categorie
+    SELECT p.*, b.nom AS marque, c.nom AS categorie, sc.nom AS sous_categorie
     FROM products p
     LEFT JOIN brands b ON p.brand_id = b.id
     LEFT JOIN categories c ON p.category_id = c.id
+    LEFT JOIN subcategories sc ON p.subcategory_id = sc.id
     WHERE p.id = ?
 ");
 $stmt->execute([$id]);
@@ -23,15 +24,26 @@ if (!$produit) {
     exit();
 }
 
+// Récupérer types de peau
+$stStmt = $pdo->prepare("
+    SELECT st.nom 
+    FROM skin_types st
+    JOIN product_skin_types pst ON st.id = pst.skin_type_id
+    WHERE pst.product_id = ?
+");
+$stStmt->execute([$id]);
+$skin_types = $stStmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Récupérer toutes les images
+$iStmt = $pdo->prepare("SELECT image_path, is_main FROM product_images WHERE product_id = ? ORDER BY is_main DESC");
+$iStmt->execute([$id]);
+$images = $iStmt->fetchAll(PDO::FETCH_ASSOC);
+$imagePrincipale = $images[0]['image_path'] ?? '';
+
 // Variantes — colonne exacte : contenance
 $vStmt = $pdo->prepare("SELECT * FROM product_variants WHERE product_id = ? ORDER BY prix");
 $vStmt->execute([$id]);
 $variantes = $vStmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Image principale
-$iStmt = $pdo->prepare("SELECT image_path FROM product_images WHERE product_id = ? LIMIT 1");
-$iStmt->execute([$id]);
-$image = $iStmt->fetchColumn();
 
 // Ajout au panier
 $msg = "";
@@ -63,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
                     'contenance' => $variant['contenance'],
                     'prix'       => $variant['prix'],
                     'quantite'   => $quantite,
-                    'image'      => $image
+                    'image'      => $imagePrincipale
                 ];
             }
             $msg = "success";
@@ -84,15 +96,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
     <?php endif; ?>
 
     <div class="product-detail">
-        <img src="<?= htmlspecialchars($image ?? '') ?>"
-             alt="<?= htmlspecialchars($produit['nom']) ?>"
-             onerror="this.src='https://via.placeholder.com/350x350/e8f5e9/2e7d32?text=PharmaShop'">
+        <div class="product-gallery">
+            <div class="main-image-container">
+                <img src="<?= htmlspecialchars($imagePrincipale) ?>" 
+                     id="main-img" 
+                     alt="<?= htmlspecialchars($produit['nom']) ?>"
+                     onerror="this.src='https://via.placeholder.com/350x350/e8f5e9/2e7d32?text=PharmaShop'">
+            </div>
+            
+            <?php if (count($images) > 1): ?>
+                <div class="thumbnails">
+                    <?php foreach ($images as $img): ?>
+                        <img src="<?= htmlspecialchars($img['image_path']) ?>" 
+                             onclick="document.getElementById('main-img').src=this.src; document.querySelectorAll('.thumbnails img').forEach(i=>i.classList.remove('active')); this.classList.add('active');"
+                             alt="Thumbnail"
+                             class="<?= $img['image_path'] == $imagePrincipale ? 'active' : '' ?>">
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
 
         <div class="info">
             <p class="meta">
                 🏷️ <?= htmlspecialchars($produit['marque'] ?? '') ?> &nbsp;|&nbsp;
                 📂 <?= htmlspecialchars($produit['categorie'] ?? '') ?>
+                <?php if (!empty($produit['sous_categorie'])): ?>
+                    » <span class="text-primary"><?= htmlspecialchars($produit['sous_categorie']) ?></span>
+                <?php endif; ?>
             </p>
+
+            <?php if (!empty($skin_types)): ?>
+                <div class="skin-tags">
+                    <?php foreach ($skin_types as $st): ?>
+                        <span class="skin-pill"><?= htmlspecialchars($st) ?></span>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
             <h1><?= htmlspecialchars($produit['nom']) ?></h1>
             <p class="description">
                 <?= nl2br(htmlspecialchars($produit['description'] ?? '')) ?>
@@ -119,11 +159,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
                         <input type="number" name="quantite" value="1" min="1" max="20" class="qty-input">
                     </div>
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <button type="submit" name="ajouter_panier" class="btn-primary" style="font-size:16px; padding:12px 30px;">
+                        <button type="submit" name="ajouter_panier" class="btn-primary w-100" style="padding:15px;">
                             🛒 Ajouter au panier
                         </button>
                     <?php else: ?>
-                        <a href="<?= BASE_URL ?>login.php" class="btn-primary">
+                        <a href="<?= BASE_URL ?>login.php" class="btn-primary w-100">
                             🔑 Connectez-vous pour acheter
                         </a>
                     <?php endif; ?>
@@ -133,8 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
             <?php endif; ?>
         </div>
     </div>
-    <p style="margin-top:20px;">
-        <a href="<?= BASE_URL ?>produits.php" style="color:#2e7d32;">← Retour aux produits</a>
+    <p class="mt-lg">
+        <a href="<?= BASE_URL ?>produits.php" class="text-primary">← Retour aux produits</a>
     </p>
 </div>
 

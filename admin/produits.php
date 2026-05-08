@@ -34,8 +34,8 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h1 style="color:#1b5e20;">📦 Gestion des Produits</h1>
+        <div class="flex justify-between align-center mb-lg">
+            <h1 class="text-primary">📦 Gestion des Produits</h1>
             <a href="<?= BASE_URL ?>admin/ajouter_produit.php" class="btn-primary">➕ Ajouter</a>
         </div>
 
@@ -47,17 +47,17 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="alert alert-success">Produit modifié.</div>
         <?php endif; ?>
 
-        <form method="GET" style="display:flex; gap:10px; margin-bottom:20px;">
+        <form method="GET" class="flex gap-sm mb-lg">
             <input type="text" name="q" value="<?= htmlspecialchars($recherche) ?>"
-                   placeholder="🔍 Rechercher..." style="flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:6px;">
+                   placeholder="🔍 Rechercher..." class="flex-1">
             <button type="submit" class="btn-primary">Rechercher</button>
             <?php if ($recherche): ?>
-                <a href="<?= BASE_URL ?>admin/produits.php" style="padding:8px 14px; color:#888; text-decoration:none; align-self:center;">✕</a>
+                <a href="<?= BASE_URL ?>admin/produits.php" class="align-center p-md text-muted">✕</a>
             <?php endif; ?>
         </form>
 
         <div class="table-container">
-            <p style="color:#888; margin-bottom:15px;"><?= count($produits) ?> produit(s)</p>
+            <p class="text-muted mb-sm"><?= count($produits) ?> produit(s)</p>
             <table>
                 <thead>
                     <tr><th>ID</th><th>Nom</th><th>Marque</th><th>Catégorie</th><th>Prix min.</th><th>Variantes</th><th>Actions</th></tr>
