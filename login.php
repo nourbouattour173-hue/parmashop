@@ -41,10 +41,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div>
     <?php endif; ?>
 
-    <div class="alert alert-info" style="font-size:13px;">
-        <strong>Admin :</strong> admin@admin.com / password<br>
-        <strong>Client :</strong> farah@gmail.com / (votre mot de passe)
-    </div>
+    
 
     <form method="POST">
         <div class="form-group">
