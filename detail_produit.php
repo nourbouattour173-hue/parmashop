@@ -1,10 +1,10 @@
 <?php
 $pageTitle = "Produit - PharmaShop";
-require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/header.php';
 
 $id = (int)($_GET['id'] ?? 0);
-if ($id === 0) { header("Location: http://localhost/parapharmacie/produits.php"); exit(); }
+if ($id === 0) { header("Location: " . BASE_URL . "produits.php"); exit(); }
 
 // Récupérer le produit
 $stmt = $pdo->prepare("
@@ -37,7 +37,7 @@ $image = $iStmt->fetchColumn();
 $msg = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
     if (!isset($_SESSION['user_id'])) {
-        header("Location: http://localhost/parapharmacie/login.php");
+        header("Location: " . BASE_URL . "login.php");
         exit();
     }
     $variantId = (int)$_POST['variant_id'];
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
     <?php if ($msg === 'success'): ?>
         <div class="alert alert-success">
             ✅ Produit ajouté au panier !
-            <a href="http://localhost/parapharmacie/panier.php">Voir le panier →</a>
+            <a href="<?= BASE_URL ?>panier.php">Voir le panier →</a>
         </div>
     <?php elseif (str_starts_with($msg, 'error:')): ?>
         <div class="alert alert-error"><?= htmlspecialchars(substr($msg, 6)) ?></div>
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
                             🛒 Ajouter au panier
                         </button>
                     <?php else: ?>
-                        <a href="http://localhost/parapharmacie/login.php" class="btn-primary">
+                        <a href="<?= BASE_URL ?>login.php" class="btn-primary">
                             🔑 Connectez-vous pour acheter
                         </a>
                     <?php endif; ?>
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
         </div>
     </div>
     <p style="margin-top:20px;">
-        <a href="http://localhost/parapharmacie/produits.php" style="color:#2e7d32;">← Retour aux produits</a>
+        <a href="<?= BASE_URL ?>produits.php" style="color:#2e7d32;">← Retour aux produits</a>
     </p>
 </div>
 

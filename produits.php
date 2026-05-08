@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "Nos Produits - PharmaShop";
-require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/header.php';
 
 $categorieId = $_GET['categorie'] ?? '';
 $brandId     = $_GET['marque']    ?? '';
@@ -58,7 +58,7 @@ $marques    = $pdo->query("SELECT * FROM brands ORDER BY nom")->fetchAll(PDO::FE
             <?php endforeach; ?>
         </select>
         <button type="submit" class="btn-primary">Filtrer</button>
-        <a href="http://localhost/parapharmacie/produits.php" style="color:#888; text-decoration:none; align-self:center;">✕ Reset</a>
+        <a href="<?= BASE_URL ?>produits.php" style="color:#888; text-decoration:none; align-self:center;">✕ Reset</a>
     </form>
 
     <?php if (empty($produits)): ?>
@@ -76,7 +76,7 @@ $marques    = $pdo->query("SELECT * FROM brands ORDER BY nom")->fetchAll(PDO::FE
                         <p class="price">
                             <?= $prod['prix_min'] ? 'Dès ' . number_format($prod['prix_min'], 2) . ' DT' : 'N/D' ?>
                         </p>
-                        <a href="http://localhost/parapharmacie/detail_produit.php?id=<?= $prod['id'] ?>" class="btn-details">
+                        <a href="<?= BASE_URL ?>detail_produit.php?id=<?= $prod['id'] ?>" class="btn-details">
                             Voir le produit
                         </a>
                     </div>

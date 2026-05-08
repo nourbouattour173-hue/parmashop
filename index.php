@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "PharmaShop - Accueil";
-require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/header.php';
 
 // 8 derniers produits
 $produits = $pdo->query("
@@ -23,7 +23,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
 <div class="hero">
     <h1>💊 Bienvenue sur PharmaShop</h1>
     <p>Votre parapharmacie en ligne — Soins, beauté et hygiène de grandes marques</p>
-    <a href="http://localhost/parapharmacie/produits.php" class="btn">Découvrir nos produits</a>
+    <a href="<?= BASE_URL ?>produits.php" class="btn">Découvrir nos produits</a>
 </div>
 
 <div class="container">
@@ -31,7 +31,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
     <h2 class="section-title">🗂️ Nos Rayons</h2>
     <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:40px;">
         <?php foreach ($categories as $cat): ?>
-            <a href="http://localhost/parapharmacie/produits.php?categorie=<?= $cat['id'] ?>"
+            <a href="<?= BASE_URL ?>produits.php?categorie=<?= $cat['id'] ?>"
                style="background:#e8f5e9; color:#2e7d32; padding:10px 20px; border-radius:20px;
                       text-decoration:none; font-weight:600; border:1px solid #a5d6a7;">
                 <?= htmlspecialchars($cat['nom']) ?>
@@ -52,7 +52,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
                     <p class="price">
                         <?= $prod['prix_min'] ? 'Dès ' . number_format($prod['prix_min'], 2) . ' DT' : 'N/D' ?>
                     </p>
-                    <a href="http://localhost/parapharmacie/detail_produit.php?id=<?= $prod['id'] ?>" class="btn-details">
+                    <a href="<?= BASE_URL ?>detail_produit.php?id=<?= $prod['id'] ?>" class="btn-details">
                         Voir le produit
                     </a>
                 </div>

@@ -1,11 +1,12 @@
 <?php
 require_once __DIR__ . '/includes/auth_check.php';
+require_once __DIR__ . '/includes/db.php';
 $pageTitle = "Mon Panier - PharmaShop";
 require_once __DIR__ . '/includes/header.php';
 
 if (isset($_GET['supprimer'])) {
     unset($_SESSION['panier'][$_GET['supprimer']]);
-    header("Location: http://localhost/parapharmacie/panier.php");
+    header("Location: " . BASE_URL . "panier.php");
     exit();
 }
 
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_panier'])) {
         if ($qte <= 0) unset($_SESSION['panier'][$cle]);
         else           $_SESSION['panier'][$cle]['quantite'] = $qte;
     }
-    header("Location: http://localhost/parapharmacie/panier.php");
+    header("Location: " . BASE_URL . "panier.php");
     exit();
 }
 
@@ -30,7 +31,7 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
     <?php if (empty($panier)): ?>
         <div class="alert alert-info">
             Votre panier est vide.
-            <a href="http://localhost/parapharmacie/produits.php">→ Continuer mes achats</a>
+            <a href="<?= BASE_URL ?>produits.php">→ Continuer mes achats</a>
         </div>
     <?php else: ?>
         <form method="POST">
@@ -61,7 +62,7 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
                             </td>
                             <td><strong style="color:#2e7d32;"><?= number_format($item['prix'] * $item['quantite'], 2) ?> DT</strong></td>
                             <td>
-                                <a href="http://localhost/parapharmacie/panier.php?supprimer=<?= urlencode($cle) ?>"
+                                <a href="<?= BASE_URL ?>panier.php?supprimer=<?= urlencode($cle) ?>"
                                    class="btn-danger" style="font-size:13px;"
                                    onclick="return confirm('Supprimer cet article ?')">🗑️</a>
                             </td>
@@ -79,8 +80,8 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
             Total : <?= number_format($total, 2) ?> DT
         </div>
         <div style="text-align:right;">
-            <a href="http://localhost/parapharmacie/produits.php" style="color:#888; margin-right:20px;">← Continuer mes achats</a>
-            <a href="http://localhost/parapharmacie/commande.php" class="btn-primary" style="font-size:16px; padding:12px 30px;">
+            <a href="<?= BASE_URL ?>produits.php" style="color:#888; margin-right:20px;">← Continuer mes achats</a>
+            <a href="<?= BASE_URL ?>commande.php" class="btn-primary" style="font-size:16px; padding:12px 30px;">
                 ✅ Passer la commande
             </a>
         </div>

@@ -4,12 +4,12 @@ $pageTitle = "Modifier produit - Admin";
 require_once __DIR__ . '/../includes/db.php';
 
 $id = (int)($_GET['id'] ?? 0);
-if ($id === 0) { header("Location: http://localhost/parapharmacie/admin/produits.php"); exit(); }
+if ($id === 0) { header("Location: " . BASE_URL . "admin/produits.php"); exit(); }
 
 $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
 $stmt->execute([$id]);
 $produit = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$produit) { header("Location: http://localhost/parapharmacie/admin/produits.php"); exit(); }
+if (!$produit) { header("Location: " . BASE_URL . "admin/produits.php"); exit(); }
 
 $categories = $pdo->query("SELECT * FROM categories ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
 $marques    = $pdo->query("SELECT * FROM brands ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
@@ -24,7 +24,7 @@ $erreur = $succes = "";
 // Supprimer une variante
 if (isset($_GET['del_v'])) {
     $pdo->prepare("DELETE FROM product_variants WHERE id = ? AND product_id = ?")->execute([(int)$_GET['del_v'], $id]);
-    header("Location: http://localhost/parapharmacie/admin/modifier_produit.php?id=$id&msg=vsupp");
+    header("Location: " . BASE_URL . "admin/modifier_produit.php?id=$id&msg=vsupp");
     exit();
 }
 
@@ -132,7 +132,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 <td><?= $v['stock'] ?></td>
                                 <td style="font-size:12px; color:#aaa;"><?= htmlspecialchars($v['reference']) ?></td>
                                 <td>
-                                    <a href="http://localhost/parapharmacie/admin/modifier_produit.php?id=<?= $id ?>&del_v=<?= $v['id'] ?>"
+                                    <a href="<?= BASE_URL ?>admin/modifier_produit.php?id=<?= $id ?>&del_v=<?= $v['id'] ?>"
                                        class="btn-danger" style="font-size:12px;"
                                        onclick="return confirm('Supprimer cette variante ?')">🗑️</a>
                                 </td>
@@ -162,7 +162,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <div style="margin-top:20px;">
-            <a href="http://localhost/parapharmacie/admin/produits.php" style="color:#888;">← Retour à la liste</a>
+            <a href="<?= BASE_URL ?>admin/produits.php" style="color:#888;">← Retour à la liste</a>
         </div>
     </div>
 </div>

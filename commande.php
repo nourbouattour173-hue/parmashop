@@ -4,7 +4,7 @@ $pageTitle = "Commande - PharmaShop";
 require_once __DIR__ . '/includes/db.php';
 
 $panier = $_SESSION['panier'] ?? [];
-if (empty($panier)) { header("Location: http://localhost/parapharmacie/panier.php"); exit(); }
+if (empty($panier)) { header("Location: " . BASE_URL . "panier.php"); exit(); }
 
 $total = 0;
 foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
@@ -51,7 +51,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="alert alert-success" style="text-align:center; padding:30px; font-size:17px;">
             🎉 <strong>Commande passée avec succès !</strong><br><br>
             Vous serez notifié(e) dès l'expédition.<br><br>
-            <a href="http://localhost/parapharmacie/index.php" class="btn-primary">← Retour à l'accueil</a>
+            <a href="<?= BASE_URL ?>index.php" class="btn-primary">← Retour à l'accueil</a>
         </div>
     <?php else: ?>
         <?php if ($erreur): ?>
@@ -99,7 +99,7 @@ require_once __DIR__ . '/includes/header.php';
                     <textarea name="note" placeholder="Instructions spéciales..."></textarea>
                 </div>
                 <div style="text-align:right;">
-                    <a href="http://localhost/parapharmacie/panier.php" style="color:#888; margin-right:20px;">← Retour</a>
+                    <a href="<?= BASE_URL ?>panier.php" style="color:#888; margin-right:20px;">← Retour</a>
                     <button type="submit" class="btn-primary" style="font-size:16px; padding:12px 30px;">
                         ✅ Confirmer (<?= number_format($total, 2) ?> DT)
                     </button>

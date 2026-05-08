@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/db.php';
 // Suppression
 if (isset($_GET['supprimer'])) {
     $pdo->prepare("DELETE FROM products WHERE id = ?")->execute([(int)$_GET['supprimer']]);
-    header("Location: http://localhost/parapharmacie/admin/produits.php?msg=supprime");
+    header("Location: " . BASE_URL . "admin/produits.php?msg=supprime");
     exit();
 }
 
@@ -36,7 +36,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="admin-content">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h1 style="color:#1b5e20;">📦 Gestion des Produits</h1>
-            <a href="http://localhost/parapharmacie/admin/ajouter_produit.php" class="btn-primary">➕ Ajouter</a>
+            <a href="<?= BASE_URL ?>admin/ajouter_produit.php" class="btn-primary">➕ Ajouter</a>
         </div>
 
         <?php if (($_GET['msg'] ?? '') === 'supprime'): ?>
@@ -52,7 +52,7 @@ require_once __DIR__ . '/../includes/header.php';
                    placeholder="🔍 Rechercher..." style="flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:6px;">
             <button type="submit" class="btn-primary">Rechercher</button>
             <?php if ($recherche): ?>
-                <a href="http://localhost/parapharmacie/admin/produits.php" style="padding:8px 14px; color:#888; text-decoration:none; align-self:center;">✕</a>
+                <a href="<?= BASE_URL ?>admin/produits.php" style="padding:8px 14px; color:#888; text-decoration:none; align-self:center;">✕</a>
             <?php endif; ?>
         </form>
 
@@ -72,9 +72,9 @@ require_once __DIR__ . '/../includes/header.php';
                             <td><?= $prod['prix_min'] ? number_format($prod['prix_min'], 2) . ' DT' : '-' ?></td>
                             <td style="text-align:center;"><?= $prod['nb_variantes'] ?></td>
                             <td style="white-space:nowrap;">
-                                <a href="http://localhost/parapharmacie/admin/modifier_produit.php?id=<?= $prod['id'] ?>" class="btn-warning">✏️ Modifier</a>
+                                <a href="<?= BASE_URL ?>admin/modifier_produit.php?id=<?= $prod['id'] ?>" class="btn-warning">✏️ Modifier</a>
                                 &nbsp;
-                                <a href="http://localhost/parapharmacie/admin/produits.php?supprimer=<?= $prod['id'] ?>"
+                                <a href="<?= BASE_URL ?>admin/produits.php?supprimer=<?= $prod['id'] ?>"
                                    class="btn-danger"
                                    onclick="return confirm('Supprimer ce produit ?')">🗑️ Supprimer</a>
                             </td>

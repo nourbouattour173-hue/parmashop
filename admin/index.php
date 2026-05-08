@@ -57,7 +57,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </tbody>
             </table>
             <div style="margin-top:15px;">
-                <a href="http://localhost/parapharmacie/admin/commandes.php" style="color:#2e7d32;">Voir toutes les commandes →</a>
+                <a href="<?= BASE_URL ?>admin/commandes.php" style="color:#2e7d32;">Voir toutes les commandes →</a>
             </div>
         </div>
     </div>

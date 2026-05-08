@@ -9,7 +9,7 @@ if (isset($_GET['supprimer'])) {
         $msgErr = "Vous ne pouvez pas supprimer votre propre compte.";
     } else {
         $pdo->prepare("DELETE FROM users WHERE id = ?")->execute([$uid]);
-        header("Location: http://localhost/parapharmacie/admin/utilisateurs.php?msg=supprime");
+        header("Location: " . BASE_URL . "admin/utilisateurs.php?msg=supprime");
         exit();
     }
 }
@@ -59,7 +59,7 @@ require_once __DIR__ . '/../includes/header.php';
                             <td><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
                             <td>
                                 <?php if ($u['id'] != $_SESSION['user_id']): ?>
-                                    <a href="http://localhost/parapharmacie/admin/utilisateurs.php?supprimer=<?= $u['id'] ?>"
+                                    <a href="<?= BASE_URL ?>admin/utilisateurs.php?supprimer=<?= $u['id'] ?>"
                                        class="btn-danger" style="font-size:13px;"
                                        onclick="return confirm('Supprimer cet utilisateur ?')">🗑️ Supprimer</a>
                                 <?php else: ?>

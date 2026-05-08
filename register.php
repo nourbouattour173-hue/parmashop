@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (isset($_SESSION['user_id'])) { header("Location: http://localhost/parapharmacie/index.php"); exit(); }
+require_once __DIR__ . '/includes/db.php';
+if (isset($_SESSION['user_id'])) { header("Location: " . BASE_URL . "index.php"); exit(); }
 
 $pageTitle = "Inscription - PharmaShop";
 $erreur = $succes = "";
-require_once __DIR__ . '/includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom      = trim($_POST['nom']);
@@ -49,7 +49,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php if ($succes): ?>
         <div class="alert alert-success">
             Compte créé avec succès !<br>
-            <a href="http://localhost/parapharmacie/login.php" style="color:#1b5e20; font-weight:bold;">→ Se connecter</a>
+            <a href="<?= BASE_URL ?>login.php" style="color:#1b5e20; font-weight:bold;">→ Se connecter</a>
         </div>
     <?php else: ?>
         <form method="POST">
@@ -80,7 +80,7 @@ require_once __DIR__ . '/includes/header.php';
             <button type="submit" class="btn-primary" style="width:100%;">Créer mon compte</button>
         </form>
         <p style="text-align:center; margin-top:20px; color:#666;">
-            Déjà un compte ? <a href="http://localhost/parapharmacie/login.php" style="color:#2e7d32;">Se connecter</a>
+            Déjà un compte ? <a href="<?= BASE_URL ?>login.php" style="color:#2e7d32;">Se connecter</a>
         </p>
     <?php endif; ?>
 </div>

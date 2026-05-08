@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->prepare("INSERT INTO product_variants (product_id, reference, prix, stock, contenance) VALUES (?,?,?,?,?)")
             ->execute([$newId, $ref, $prix, $stock, $contenance]);
 
-        header("Location: http://localhost/parapharmacie/admin/produits.php?msg=ajoute");
+        header("Location: " . BASE_URL . "admin/produits.php?msg=ajoute");
         exit();
     }
 }
@@ -107,7 +107,7 @@ require_once __DIR__ . '/../includes/header.php';
 
                 <div style="display:flex; gap:15px; margin-top:10px;">
                     <button type="submit" class="btn-primary">✅ Enregistrer</button>
-                    <a href="http://localhost/parapharmacie/admin/produits.php" style="padding:10px 20px; color:#888; text-decoration:none;">Annuler</a>
+                    <a href="<?= BASE_URL ?>admin/produits.php" style="padding:10px 20px; color:#888; text-decoration:none;">Annuler</a>
                 </div>
             </form>
         </div>

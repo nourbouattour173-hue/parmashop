@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_statut'])) {
     if (in_array($statut, $statutsValides)) {
         $pdo->prepare("UPDATE orders SET statut=? WHERE id=?")->execute([$statut, (int)$_POST['order_id']]);
     }
-    header("Location: http://localhost/parapharmacie/admin/commandes.php?msg=ok");
+    header("Location: " . BASE_URL . "admin/commandes.php?msg=ok");
     exit();
 }
 

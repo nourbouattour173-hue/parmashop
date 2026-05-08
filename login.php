@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (isset($_SESSION['user_id'])) { header("Location: http://localhost/parapharmacie/index.php"); exit(); }
+require_once __DIR__ . '/includes/db.php';
+if (isset($_SESSION['user_id'])) { header("Location: " . BASE_URL . "index.php"); exit(); }
 
 $pageTitle = "Connexion - PharmaShop";
 $erreur = "";
-require_once __DIR__ . '/includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email']);
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['email']   = $user['email'];
             $_SESSION['role']    = $user['role'];
 
-            header("Location: http://localhost/parapharmacie/" . ($user['role'] === 'admin' ? 'admin/index.php' : 'index.php'));
+            header("Location: " . BASE_URL . ($user['role'] === 'admin' ? 'admin/index.php' : 'index.php'));
             exit();
         } else {
             $erreur = "Email ou mot de passe incorrect.";
@@ -55,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
         <button type="submit" class="btn-primary" style="width:100%;">Se connecter</button>
     </form>
     <p style="text-align:center; margin-top:20px; color:#666;">
-        Pas de compte ? <a href="http://localhost/parapharmacie/register.php" style="color:#2e7d32;">S'inscrire</a>
+        Pas de compte ? <a href="<?= BASE_URL ?>register.php" style="color:#2e7d32;">S'inscrire</a>
     </p>
 </div>
 
