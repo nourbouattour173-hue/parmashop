@@ -89,12 +89,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
              onerror="this.src='https://via.placeholder.com/350x350/e8f5e9/2e7d32?text=PharmaShop'">
 
         <div class="info">
-            <p style="color:#888; margin-bottom:10px;">
+            <p class="meta">
                 🏷️ <?= htmlspecialchars($produit['marque'] ?? '') ?> &nbsp;|&nbsp;
                 📂 <?= htmlspecialchars($produit['categorie'] ?? '') ?>
             </p>
             <h1><?= htmlspecialchars($produit['nom']) ?></h1>
-            <p style="color:#555; line-height:1.8; margin:15px 0;">
+            <p class="description">
                 <?= nl2br(htmlspecialchars($produit['description'] ?? '')) ?>
             </p>
 
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
                 <form method="POST">
                     <div class="form-group">
                         <label><strong>Contenance :</strong></label>
-                        <select name="variant_id" required style="width:auto; min-width:200px;">
+                        <select name="variant_id" required class="variant-select">
                             <?php foreach ($variantes as $v): ?>
                                 <option value="<?= $v['id'] ?>">
                                     <?= htmlspecialchars($v['contenance'] ?? $v['reference']) ?> —
@@ -116,8 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
                     </div>
                     <div class="form-group">
                         <label><strong>Quantité :</strong></label>
-                        <input type="number" name="quantite" value="1" min="1" max="20"
-                               style="width:80px; padding:8px; border:1px solid #ccc; border-radius:6px;">
+                        <input type="number" name="quantite" value="1" min="1" max="20" class="qty-input">
                     </div>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <button type="submit" name="ajouter_panier" class="btn-primary" style="font-size:16px; padding:12px 30px;">

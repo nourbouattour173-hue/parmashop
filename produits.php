@@ -39,8 +39,7 @@ $marques    = $pdo->query("SELECT * FROM brands ORDER BY nom")->fetchAll(PDO::FE
     </h1>
 
     <form method="GET" class="filters">
-        <input type="text" name="q" value="<?= htmlspecialchars($recherche) ?>"
-               placeholder="🔍 Rechercher..." style="flex:1; min-width:180px; padding:8px 12px; border:1px solid #ccc; border-radius:6px;">
+        <input type="text" name="q" value="<?= htmlspecialchars($recherche) ?>" placeholder="🔍 Rechercher...">
         <select name="categorie">
             <option value="">Toutes catégories</option>
             <?php foreach ($categories as $cat): ?>
@@ -58,7 +57,7 @@ $marques    = $pdo->query("SELECT * FROM brands ORDER BY nom")->fetchAll(PDO::FE
             <?php endforeach; ?>
         </select>
         <button type="submit" class="btn-primary">Filtrer</button>
-        <a href="<?= BASE_URL ?>produits.php" style="color:#888; text-decoration:none; align-self:center;">✕ Reset</a>
+        <a href="<?= BASE_URL ?>produits.php" class="btn-reset">✕ Reset</a>
     </form>
 
     <?php if (empty($produits)): ?>

@@ -29,11 +29,9 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
 <div class="container">
 
     <h2 class="section-title">🗂️ Nos Rayons</h2>
-    <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:40px;">
+    <div class="category-pills">
         <?php foreach ($categories as $cat): ?>
-            <a href="<?= BASE_URL ?>produits.php?categorie=<?= $cat['id'] ?>"
-               style="background:#e8f5e9; color:#2e7d32; padding:10px 20px; border-radius:20px;
-                      text-decoration:none; font-weight:600; border:1px solid #a5d6a7;">
+            <a href="<?= BASE_URL ?>produits.php?categorie=<?= $cat['id'] ?>" class="pill">
                 <?= htmlspecialchars($cat['nom']) ?>
             </a>
         <?php endforeach; ?>
@@ -60,17 +58,17 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
         <?php endforeach; ?>
     </div>
 
-    <div style="margin-top:50px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:25px;">
+    <div class="advantages-grid">
         <?php foreach ([
             ['🚚','Livraison rapide','Livraison sous 48h'],
             ['🔒','Paiement sécurisé','Vos données sont protégées'],
             ['🏆','Grandes marques','La Roche-Posay, Vichy, Bioderma...'],
             ['💬','Service client','Disponible 7j/7'],
         ] as $av): ?>
-            <div style="text-align:center; padding:25px; background:white; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
-                <div style="font-size:38px;"><?= $av[0] ?></div>
-                <h3 style="color:#2e7d32; margin:10px 0 8px;"><?= $av[1] ?></h3>
-                <p style="color:#666; font-size:14px;"><?= $av[2] ?></p>
+            <div class="advantage-card">
+                <div class="icon"><?= $av[0] ?></div>
+                <h3><?= $av[1] ?></h3>
+                <p><?= $av[2] ?></p>
             </div>
         <?php endforeach; ?>
     </div>

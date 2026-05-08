@@ -24,18 +24,19 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="admin-content">
         <h1 style="color:#1b5e20; margin-bottom:25px;">📊 Tableau de bord</h1>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:20px; margin-bottom:35px;">
+        <div class="stat-grid">
             <?php foreach ([
-                ['📦', $nbProduits,              'Produits',          '#2e7d32'],
-                ['👥', $nbUsers,                 'Clients',           '#1565c0'],
-                ['🛒', $nbCommandes,             'Commandes',         '#f57f17'],
-                ['💰', number_format($chiffreAff,2).' DT', 'Chiffre d\'affaires', '#6a1b9a'],
+                ['📦', $nbProduits,              'Produits',          'var(--color-success)'],
+                ['👥', $nbUsers,                 'Clients',           'var(--color-info)'],
+                ['🛒', $nbCommandes,             'Commandes',         'var(--color-warning)'],
+                ['💰', number_format($chiffreAff,2).' DT', 'CA Global', 'var(--color-secondary-light)'],
             ] as $stat): ?>
-                <div style="background:white; border-radius:10px; padding:25px; text-align:center;
-                            box-shadow:0 2px 8px rgba(0,0,0,0.07); border-top:4px solid <?= $stat[3] ?>;">
-                    <div style="font-size:35px;"><?= $stat[0] ?></div>
-                    <div style="font-size:28px; font-weight:bold; color:<?= $stat[3] ?>;"><?= $stat[1] ?></div>
-                    <div style="color:#888;"><?= $stat[2] ?></div>
+                <div class="stat-card" style="--accent: <?= $stat[3] ?>;">
+                    <div class="stat-icon"><?= $stat[0] ?></div>
+                    <div class="stat-info">
+                        <div class="stat-value"><?= $stat[1] ?></div>
+                        <div class="stat-label"><?= $stat[2] ?></div>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
