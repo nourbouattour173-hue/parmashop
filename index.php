@@ -1,0 +1,80 @@
+<?php
+$pageTitle = "PharmaShop - Accueil";
+require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/db.php';
+
+// 8 derniers produits
+$produits = $pdo->query("
+    SELECT p.id, p.nom, b.nom AS marque,
+           MIN(pv.prix) AS prix_min,
+           (SELECT image_path FROM product_images WHERE product_id = p.id LIMIT 1) AS image
+    FROM products p
+    LEFT JOIN brands b ON p.brand_id = b.id
+    LEFT JOIN product_variants pv ON pv.product_id = p.id
+    GROUP BY p.id
+    ORDER BY p.created_at DESC
+    LIMIT 8
+")->fetchAll(PDO::FETCH_ASSOC);
+
+// Catégories
+$categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<div class="hero">
+    <h1>💊 Bienvenue sur PharmaShop</h1>
+    <p>Votre parapharmacie en ligne — Soins, beauté et hygiène de grandes marques</p>
+    <a href="http://localhost/parapharmacie/produits.php" class="btn">Découvrir nos produits</a>
+</div>
+
+<div class="container">
+
+    <h2 class="section-title">🗂️ Nos Rayons</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:40px;">
+        <?php foreach ($categories as $cat): ?>
+            <a href="http://localhost/parapharmacie/produits.php?categorie=<?= $cat['id'] ?>"
+               style="background:#e8f5e9; color:#2e7d32; padding:10px 20px; border-radius:20px;
+                      text-decoration:none; font-weight:600; border:1px solid #a5d6a7;">
+                <?= htmlspecialchars($cat['nom']) ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
+
+    <h2 class="section-title">⭐ Nouveaux produits</h2>
+    <div class="products-grid">
+        <?php foreach ($produits as $prod): ?>
+            <div class="product-card">
+                <img src="<?= htmlspecialchars($prod['image'] ?? '') ?>"
+                     alt="<?= htmlspecialchars($prod['nom']) ?>"
+                     onerror="this.src='https://via.placeholder.com/300x200/e8f5e9/2e7d32?text=PharmaShop'">
+                <div class="card-body">
+                    <p class="brand"><?= htmlspecialchars($prod['marque'] ?? '') ?></p>
+                    <h3><?= htmlspecialchars($prod['nom']) ?></h3>
+                    <p class="price">
+                        <?= $prod['prix_min'] ? 'Dès ' . number_format($prod['prix_min'], 2) . ' DT' : 'N/D' ?>
+                    </p>
+                    <a href="http://localhost/parapharmacie/detail_produit.php?id=<?= $prod['id'] ?>" class="btn-details">
+                        Voir le produit
+                    </a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div style="margin-top:50px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:25px;">
+        <?php foreach ([
+            ['🚚','Livraison rapide','Livraison sous 48h'],
+            ['🔒','Paiement sécurisé','Vos données sont protégées'],
+            ['🏆','Grandes marques','La Roche-Posay, Vichy, Bioderma...'],
+            ['💬','Service client','Disponible 7j/7'],
+        ] as $av): ?>
+            <div style="text-align:center; padding:25px; background:white; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+                <div style="font-size:38px;"><?= $av[0] ?></div>
+                <h3 style="color:#2e7d32; margin:10px 0 8px;"><?= $av[1] ?></h3>
+                <p style="color:#666; font-size:14px;"><?= $av[2] ?></p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+</div>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
