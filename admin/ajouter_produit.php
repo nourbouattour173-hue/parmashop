@@ -36,13 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:25px;">➕ Ajouter un produit</h1>
+        <h1 style="color:#1b5e20; margin-bottom:25px;"><i class="bi bi-plus-circle"></i> Ajouter un produit</h1>
 
         <?php if ($erreur): ?>
             <div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div>

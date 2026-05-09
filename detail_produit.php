@@ -100,8 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
             <div class="main-image-container">
                 <img src="<?= htmlspecialchars($imagePrincipale) ?>" 
                      id="main-img" 
-                     alt="<?= htmlspecialchars($produit['nom']) ?>"
-                     onerror="this.src='https://via.placeholder.com/350x350/e8f5e9/2e7d32?text=PharmaShop'">
+                     alt="<?= htmlspecialchars($produit['nom']) ?>">
             </div>
             
             <?php if (count($images) > 1): ?>
@@ -118,8 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
 
         <div class="info">
             <p class="meta">
-                🏷️ <?= htmlspecialchars($produit['marque'] ?? '') ?> &nbsp;|&nbsp;
-                📂 <?= htmlspecialchars($produit['categorie'] ?? '') ?>
+                <i class="bi bi-tag"></i> <?= htmlspecialchars($produit['marque'] ?? '') ?> &nbsp;|&nbsp;
+                <i class="bi bi-folder"></i> <?= htmlspecialchars($produit['categorie'] ?? '') ?>
                 <?php if (!empty($produit['sous_categorie'])): ?>
                     » <span class="text-primary"><?= htmlspecialchars($produit['sous_categorie']) ?></span>
                 <?php endif; ?>
@@ -137,19 +136,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
             <p class="description">
                 <?= nl2br(htmlspecialchars($produit['description'] ?? '')) ?>
             </p>
-
             <?php if (!empty($variantes)): ?>
-                <p class="price">Dès <?= number_format(min(array_column($variantes, 'prix')), 2) ?> DT</p>
-
                 <form method="POST">
                     <div class="form-group">
                         <label><strong>Contenance :</strong></label>
                         <select name="variant_id" required class="variant-select">
                             <?php foreach ($variantes as $v): ?>
                                 <option value="<?= $v['id'] ?>">
-                                    <?= htmlspecialchars($v['contenance'] ?? $v['reference']) ?> —
-                                    <?= number_format($v['prix'], 2) ?> DT
-                                    (Stock: <?= $v['stock'] ?>)
+                                    <?= htmlspecialchars($v['contenance'] ?? $v['reference']) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -160,11 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_panier'])) {
                     </div>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <button type="submit" name="ajouter_panier" class="btn-primary w-100" style="padding:15px;">
-                            🛒 Ajouter au panier
+                            <i class="bi bi-cart-plus"></i> Ajouter au panier
                         </button>
                     <?php else: ?>
                         <a href="<?= BASE_URL ?>login.php" class="btn-primary w-100">
-                            🔑 Connectez-vous pour acheter
+                            <i class="bi bi-person-lock"></i> Connectez-vous pour acheter
                         </a>
                     <?php endif; ?>
                 </form>

@@ -20,13 +20,13 @@ $commandes = $pdo->query("
     ORDER BY o.date_commande DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:20px;">🛒 Gestion des Commandes</h1>
+        <h1 style="color:#1b5e20; margin-bottom:20px;"><i class="bi bi-cart"></i> Gestion des Commandes</h1>
 
         <?php if (($_GET['msg'] ?? '') === 'ok'): ?>
             <div class="alert alert-success">Statut mis à jour.</div>

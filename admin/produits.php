@@ -28,15 +28,15 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
         <div class="flex justify-between align-center mb-lg">
-            <h1 class="text-primary">📦 Gestion des Produits</h1>
-            <a href="<?= BASE_URL ?>admin/ajouter_produit.php" class="btn-primary">➕ Ajouter</a>
+            <h1 class="text-primary"><i class="bi bi-box-seam"></i> Gestion des Produits</h1>
+            <a href="<?= BASE_URL ?>admin/ajouter_produit.php" class="btn-primary"><i class="bi bi-plus-circle"></i> Ajouter</a>
         </div>
 
         <?php if (($_GET['msg'] ?? '') === 'supprime'): ?>
@@ -49,7 +49,7 @@ require_once __DIR__ . '/../includes/header.php';
 
         <form method="GET" class="flex gap-sm mb-lg">
             <input type="text" name="q" value="<?= htmlspecialchars($recherche) ?>"
-                   placeholder="🔍 Rechercher..." class="flex-1">
+                   placeholder="Rechercher..." class="flex-1">
             <button type="submit" class="btn-primary">Rechercher</button>
             <?php if ($recherche): ?>
                 <a href="<?= BASE_URL ?>admin/produits.php" class="align-center p-md text-muted">✕</a>
@@ -72,11 +72,11 @@ require_once __DIR__ . '/../includes/header.php';
                             <td><?= $prod['prix_min'] ? number_format($prod['prix_min'], 2) . ' DT' : '-' ?></td>
                             <td style="text-align:center;"><?= $prod['nb_variantes'] ?></td>
                             <td style="white-space:nowrap;">
-                                <a href="<?= BASE_URL ?>admin/modifier_produit.php?id=<?= $prod['id'] ?>" class="btn-warning">✏️ Modifier</a>
+                                <a href="<?= BASE_URL ?>admin/modifier_produit.php?id=<?= $prod['id'] ?>" class="btn-warning"><i class="bi bi-pencil-square"></i> Modifier</a>
                                 &nbsp;
                                 <a href="<?= BASE_URL ?>admin/produits.php?supprimer=<?= $prod['id'] ?>"
                                    class="btn-danger"
-                                   onclick="return confirm('Supprimer ce produit ?')">🗑️ Supprimer</a>
+                                   onclick="return confirm('Supprimer ce produit ?')"><i class="bi bi-trash"></i> Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

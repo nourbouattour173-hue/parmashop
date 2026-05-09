@@ -98,18 +98,18 @@ if (!empty($categorieId)) {
         </aside>
 
         <main class="products-main">
-            <h1 class="section-title">🛍️ Nos Produits
+            <h1 class="section-title"><i class="bi bi-shop"></i> Nos Produits
                 <span style="font-size:15px; color:#666; font-weight:normal;">(<?= count($produits) ?> produits)</span>
             </h1>
 
             <?php if ($msg === 'success_cart'): ?>
-                <div class="alert alert-success">🛒 Produit ajouté au panier !</div>
+                <div class="alert alert-success"><i class="bi bi-cart-check"></i> Produit ajouté au panier !</div>
             <?php elseif ($msg === 'success_fav'): ?>
-                <div class="alert alert-success">❤️ Ajouté aux favoris !</div>
+                <div class="alert alert-success"><i class="bi bi-heart-fill"></i> Ajouté aux favoris !</div>
             <?php elseif ($msg === 'error_stock'): ?>
-                <div class="alert alert-error">❌ Stock insuffisant.</div>
+                <div class="alert alert-error"><i class="bi bi-exclamation-triangle"></i> Stock insuffisant.</div>
             <?php elseif ($msg === 'already_fav'): ?>
-                <div class="alert alert-info">ℹ️ Déjà dans vos favoris.</div>
+                <div class="alert alert-info"><i class="bi bi-info-circle"></i> Déjà dans vos favoris.</div>
             <?php endif; ?>
 
     <?php if (empty($produits)): ?>
@@ -137,13 +137,13 @@ if (!empty($categorieId)) {
                                 <input type="hidden" name="variant_id" value="<?= $prod['variant_id'] ?>">
                                 <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">
                                 <button type="submit" name="ajouter_panier" class="btn-primary btn-sm w-100">
-                                    🛒 Panier
+                                    <i class="bi bi-cart-plus"></i> Panier
                                 </button>
                             </form>
                             <form method="POST">
                                 <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">
                                 <button type="submit" name="ajouter_favoris" class="btn-favorite" title="Ajouter aux favoris">
-                                    ❤️
+                                    <i class="bi bi-heart"></i>
                                 </button>
                             </form>
                         </div>

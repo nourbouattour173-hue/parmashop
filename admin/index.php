@@ -16,23 +16,23 @@ $dernieres = $pdo->query("
     LIMIT 5
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:25px;">📊 Tableau de bord</h1>
+        <h1 style="color:#1b5e20; margin-bottom:25px;"><i class="bi bi-speedometer2"></i> Tableau de bord</h1>
 
         <div class="stat-grid">
             <?php foreach ([
-                ['📦', $nbProduits,              'Produits',          'var(--color-success)'],
-                ['👥', $nbUsers,                 'Clients',           'var(--color-info)'],
-                ['🛒', $nbCommandes,             'Commandes',         'var(--color-warning)'],
-                ['💰', number_format($chiffreAff,2).' DT', 'CA Global', 'var(--color-secondary-light)'],
+                ['bi-box-seam', $nbProduits,              'Produits',          'var(--color-success)'],
+                ['bi-people', $nbUsers,                 'Clients',           'var(--color-info)'],
+                ['bi-cart', $nbCommandes,             'Commandes',         'var(--color-warning)'],
+                ['bi-cash-stack', number_format($chiffreAff,2).' DT', 'CA Global', 'var(--color-secondary-light)'],
             ] as $stat): ?>
                 <div class="stat-card" style="--accent: <?= $stat[3] ?>;">
-                    <div class="stat-icon"><?= $stat[0] ?></div>
+                    <div class="stat-icon"><i class="bi <?= $stat[0] ?>"></i></div>
                     <div class="stat-info">
                         <div class="stat-value"><?= $stat[1] ?></div>
                         <div class="stat-label"><?= $stat[2] ?></div>
@@ -42,7 +42,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <div class="table-container">
-            <h3 style="color:#1b5e20; margin-bottom:15px;">🕐 Dernières commandes</h3>
+            <h3 style="color:#1b5e20; margin-bottom:15px;"><i class="bi bi-clock-history"></i> Dernières commandes</h3>
             <table>
                 <thead><tr><th>N°</th><th>Client</th><th>Date</th><th>Total</th><th>Statut</th></tr></thead>
                 <tbody>

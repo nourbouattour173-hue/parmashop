@@ -63,13 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_variant'])) {
     $variantes = $vStmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:20px;">✏️ Modifier produit #<?= $id ?></h1>
+        <h1 style="color:#1b5e20; margin-bottom:20px;"><i class="bi bi-pencil-square"></i> Modifier produit #<?= $id ?></h1>
 
         <?php if ($succes || ($_GET['msg'] ?? '') === 'vsupp'): ?>
             <div class="alert alert-success"><?= $succes ?: 'Variante supprimée.' ?></div>
@@ -134,7 +134,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 <td>
                                     <a href="<?= BASE_URL ?>admin/modifier_produit.php?id=<?= $id ?>&del_v=<?= $v['id'] ?>"
                                        class="btn-danger" style="font-size:12px;"
-                                       onclick="return confirm('Supprimer cette variante ?')">🗑️</a>
+                                       onclick="return confirm('Supprimer cette variante ?')"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

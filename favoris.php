@@ -39,7 +39,7 @@ $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container">
-    <h1 class="section-title">❤️ Mes Favoris</h1>
+    <h1 class="section-title"><i class="bi bi-heart-fill" style="color:var(--color-danger);"></i> Mes Favoris</h1>
 
     <?php if (empty($favoris)): ?>
         <div class="alert alert-info">Vous n'avez pas encore de favoris. <a href="produits.php">Découvrir les produits</a></div>
@@ -66,11 +66,11 @@ $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <input type="hidden" name="variant_id" value="<?= $prod['variant_id'] ?>">
                                 <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">
                                 <button type="submit" name="ajouter_panier" class="btn-primary btn-sm w-100">
-                                    🛒 Panier
+                                    <i class="bi bi-cart-plus"></i> Panier
                                 </button>
                             </form>
                             <a href="favoris.php?remove=<?= $prod['fav_id'] ?>" class="btn-danger btn-icon" title="Retirer des favoris">
-                                🗑️
+                                <i class="bi bi-trash"></i>
                             </a>
                         </div>
                     </div>

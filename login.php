@@ -18,10 +18,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
+// removed stray opening PHP tag
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['nom']     = $user['nom'];
             $_SESSION['email']   = $user['email'];
             $_SESSION['role']    = $user['role'];
+
+            // Set session cookie lifetime based on role
+            // 0 means until browser is closed
+            $expire = ($user['role'] === 'admin') ? 0 : time() + (2 * 24 * 60 * 60);
+            
+            // Update the session cookie with the correct lifetime
+            setcookie(session_name(), session_id(), [
+                'expires' => $expire,
+                'path' => '/',
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+
+            session_regenerate_id(true);
 
             header("Location: " . BASE_URL . ($user['role'] === 'admin' ? 'admin/index.php' : 'index.php'));
             exit();
@@ -35,7 +50,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="form-container">
-    <h2>🔑 Connexion</h2>
+    <h2><i class="bi bi-key"></i> Connexion</h2>
 
     <?php if ($erreur): ?>
         <div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div>
