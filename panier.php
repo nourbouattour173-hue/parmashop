@@ -26,12 +26,12 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
 ?>
 
 <div class="container">
-    <h1 class="section-title">🛒 Mon Panier</h1>
+    <h1 class="section-title"><i class="fas fa-shopping-cart"></i> Mon Panier</h1>
 
     <?php if (empty($panier)): ?>
         <div class="alert alert-info">
             Votre panier est vide.
-            <a href="<?= BASE_URL ?>produits.php">→ Continuer mes achats</a>
+            <a href="<?= BASE_URL ?>produits.php">Continuer mes achats</a>
         </div>
     <?php else: ?>
         <form method="POST">
@@ -64,7 +64,7 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
                             <td>
                                 <a href="<?= BASE_URL ?>panier.php?supprimer=<?= urlencode($cle) ?>"
                                    class="btn-danger btn-icon"
-                                   onclick="return confirm('Supprimer cet article ?')">🗑️</a>
+                                   onclick="return confirm('Supprimer cet article ?')"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -72,7 +72,7 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
             </table>
         </div>
         <div class="text-right mt-lg">
-            <button type="submit" name="maj_panier" class="btn-warning">🔄 Mettre à jour</button>
+            <button type="submit" name="maj_panier" class="btn-warning"><i class="fas fa-sync-alt"></i> Mettre à jour</button>
         </div>
         </form>
 
@@ -82,7 +82,7 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
         <div class="text-right">
             <a href="<?= BASE_URL ?>produits.php" class="text-muted mr-lg">← Continuer mes achats</a>
             <a href="<?= BASE_URL ?>commande.php" class="btn-primary" style="font-size:16px; padding:12px 30px;">
-                ✅ Passer la commande
+                Passer la commande
             </a>
         </div>
     <?php endif; ?>

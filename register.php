@@ -40,7 +40,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="form-container">
-    <h2>✍️ Créer un compte</h2>
+    <h2>Créer un compte</h2>
 
     <?php if ($erreur): ?>
         <div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div>
@@ -49,7 +49,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php if ($succes): ?>
         <div class="alert alert-success">
             Compte créé avec succès !<br>
-            <a href="<?= BASE_URL ?>login.php" style="color:#1b5e20; font-weight:bold;">→ Se connecter</a>
+            <a href="<?= BASE_URL ?>login.php" style="color:#1b5e20; font-weight:bold;">Se connecter</a>
         </div>
     <?php else: ?>
         <form method="POST">

@@ -45,11 +45,11 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="container" style="max-width:800px;">
-    <h1 class="section-title">✅ Finaliser ma commande</h1>
+    <h1 class="section-title">Finaliser ma commande</h1>
 
     <?php if ($succes): ?>
         <div class="alert alert-success" style="text-align:center; padding:30px; font-size:17px;">
-            🎉 <strong>Commande passée avec succès !</strong><br><br>
+            <strong>Commande passée avec succès !</strong><br><br>
             Vous serez notifié(e) dès l'expédition.<br><br>
             <a href="<?= BASE_URL ?>index.php" class="btn-primary">← Retour à l'accueil</a>
         </div>
@@ -59,7 +59,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php endif; ?>
 
         <div class="table-container" style="margin-bottom:25px;">
-            <h3 style="color:#2e7d32; margin-bottom:15px;">📋 Récapitulatif</h3>
+            <h3 style="color:#2e7d32; margin-bottom:15px;">Récapitulatif</h3>
             <table>
                 <thead><tr><th>Produit</th><th>Contenance</th><th>Qté</th><th>Prix</th></tr></thead>
                 <tbody>
@@ -80,7 +80,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <div class="table-container">
-            <h3 style="color:#2e7d32; margin-bottom:20px;">📦 Informations de livraison</h3>
+            <h3 style="color:#2e7d32; margin-bottom:20px;">Informations de livraison</h3>
             <form method="POST">
                 <div class="form-group">
                     <label>Adresse de livraison *</label>
@@ -89,9 +89,9 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="form-group">
                     <label>Méthode de paiement</label>
                     <select name="methode_paiement">
-                        <option value="carte">💳 Carte bancaire</option>
-                        <option value="virement">🏦 Virement bancaire</option>
-                        <option value="especes">💵 Paiement à la livraison</option>
+                        <option value="carte">Carte bancaire</option>
+                        <option value="virement">Virement bancaire</option>
+                        <option value="especes">Paiement à la livraison</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -101,7 +101,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div style="text-align:right;">
                     <a href="<?= BASE_URL ?>panier.php" style="color:#888; margin-right:20px;">← Retour</a>
                     <button type="submit" class="btn-primary" style="font-size:16px; padding:12px 30px;">
-                        ✅ Confirmer (<?= number_format($total, 2) ?> DT)
+                        Confirmer (<?= number_format($total, 2) ?> DT)
                     </button>
                 </div>
             </form>

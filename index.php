@@ -98,23 +98,23 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 <div class="hero">
-    <h1><i class="bi bi-capsule-pill"></i> Bienvenue sur PharmaShop</h1>
+    <h1><i class="fas fa-prescription-bottle-medical"></i> Bienvenue sur PharmaShop</h1>
     <p>Votre parapharmacie en ligne — Soins, beauté et hygiène de grandes marques</p>
     <a href="<?= BASE_URL ?>produits.php" class="btn-primary">Découvrir nos produits</a>
 </div>
 
 <div class="container">
     <?php if ($msg === 'success_cart'): ?>
-        <div class="alert alert-success"><i class="bi bi-cart-check"></i> Produit ajouté au panier !</div>
+        <div class="alert alert-success"><i class="fas fa-cart-check"></i> Produit ajouté au panier !</div>
     <?php elseif ($msg === 'success_fav'): ?>
-        <div class="alert alert-success"><i class="bi bi-heart-fill"></i> Ajouté aux favoris !</div>
+        <div class="alert alert-success"><i class="fas fa-heart"></i> Ajouté aux favoris !</div>
     <?php elseif ($msg === 'already_fav'): ?>
-        <div class="alert alert-info"><i class="bi bi-info-circle"></i> Déjà dans vos favoris.</div>
+        <div class="alert alert-info"><i class="fas fa-info-circle"></i> Déjà dans vos favoris.</div>
     <?php elseif ($msg === 'removed_fav'): ?>
-        <div class="alert alert-info"><i class="bi bi-heart"></i> Retiré des favoris.</div>
+        <div class="alert alert-info"><i class="fas fa-heart-broken"></i> Retiré des favoris.</div>
     <?php endif; ?>
 
-    <h2 class="section-title"><i class="bi bi-grid-3x3-gap"></i> Nos Rayons</h2>
+    <h2 class="section-title"><i class="fas fa-th-large"></i> Nos Rayons</h2>
     <div class="category-pills">
         <?php foreach ($categories as $cat): ?>
             <a href="<?= BASE_URL ?>produits.php?categorie=<?= $cat['id'] ?>" class="pill">
@@ -123,7 +123,7 @@ if (isset($_SESSION['user_id'])) {
         <?php endforeach; ?>
     </div>
 
-    <h2 class="section-title"><i class="bi bi-star"></i> Nouveaux produits</h2>
+    <h2 class="section-title"><i class="fas fa-star"></i> Nouveaux produits</h2>
     <div class="products-grid">
         <?php foreach ($produits as $prod): ?>
             <?php $enFavori = in_array($prod['id'], $favorisProduits); ?>
@@ -176,13 +176,13 @@ if (isset($_SESSION['user_id'])) {
 
     <div class="advantages-grid">
         <?php foreach ([
-            ['bi-truck','Livraison rapide','Livraison sous 48h'],
-            ['bi-shield-lock','Paiement sécurisé','Vos données sont protégées'],
-            ['bi-award','Grandes marques','La Roche-Posay, Vichy, Bioderma...'],
-            ['bi-chat-dots','Service client','Disponible 7j/7'],
+            ['fa-shipping-fast','Livraison rapide','Livraison sous 48h'],
+            ['fa-shield-alt','Paiement sécurisé','Vos données sont protégées'],
+            ['fa-medal','Grandes marques','La Roche-Posay, Vichy, Bioderma...'],
+            ['fa-headset','Service client','Disponible 7j/7'],
         ] as $av): ?>
             <div class="advantage-card">
-                <div class="icon"><i class="bi <?= $av[0] ?>"></i></div>
+                <div class="icon"><i class="fas <?= $av[0] ?>"></i></div>
                 <h3><?= $av[1] ?></h3>
                 <p><?= $av[2] ?></p>
             </div>

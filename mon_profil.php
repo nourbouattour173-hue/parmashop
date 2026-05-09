@@ -46,16 +46,52 @@ $commandes = $cmdStmt->fetchAll(PDO::FETCH_ASSOC);
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="container" style="max-width:900px;">
-    <h1 class="section-title">👤 Mon Profil</h1>
+<div class="container">
+    <div class="profile-header">
+        <h1 class="section-title">Mon Profil</h1>
+        <div class="flex gap-sm">
+            <a href="<?= BASE_URL ?>logout.php" class="btn-danger btn-sm">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
+    </div>
 
-    <?php if ($succes): ?><div class="alert alert-success"><?= htmlspecialchars($succes) ?></div><?php endif; ?>
+    <?php if ($succes): ?><div class="alert alert-success" data-auto-hide="5000"><?= htmlspecialchars($succes) ?></div><?php endif; ?>
     <?php if ($erreur): ?><div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div><?php endif; ?>
 
-    <div class="table-container mb-lg">
-        <h3 class="text-primary mb-md">✏️ Modifier mes informations</h3>
+    <!-- Affichage des coordonnées -->
+    <div class="profile-card" id="profileInfo">
+        <div class="profile-info-item">
+            <span class="label">Nom complet</span>
+            <span class="value"><?= htmlspecialchars($user['nom'] ?? 'Non renseigné') ?></span>
+        </div>
+        <div class="profile-info-item">
+            <span class="label">Email</span>
+            <span class="value"><?= htmlspecialchars($user['email']) ?></span>
+        </div>
+        <div class="profile-info-item">
+            <span class="label">Téléphone</span>
+            <span class="value"><?= htmlspecialchars($user['telephone'] ?? 'Non renseigné') ?></span>
+        </div>
+        <div class="profile-info-item">
+            <span class="label">Adresse</span>
+            <span class="value"><?= htmlspecialchars($user['adresse'] ?? 'Non renseigné') ?></span>
+        </div>
+    </div>
+    <div class="profile-actions">
+        <button type="button" class="btn-primary" id="btnEditProfile">
+            <i class="fas fa-edit"></i> Modifier mon profil
+        </button>
+        <a href="<?= BASE_URL ?>mes_commandes.php" class="btn-secondary">
+            <i class="fas fa-shopping-bag"></i> Voir tous mes achats
+        </a>
+    </div>
+
+    <!-- Formulaire de modification (masqué par défaut) -->
+    <div class="table-container mb-lg" id="editProfileForm" style="display:none;">
+        <h3 class="text-primary mb-md">Modifier mes informations</h3>
         <form method="POST">
-            <div class="profile-grid">
+            <div class="profile-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                 <div class="form-group">
                     <label>Nom *</label>
                     <input type="text" name="nom" value="<?= htmlspecialchars($user['nom'] ?? '') ?>" required>
@@ -81,35 +117,34 @@ require_once __DIR__ . '/includes/header.php';
                     <input type="password" name="confirm_password">
                 </div>
             </div>
-            <button type="submit" class="btn-primary">💾 Enregistrer</button>
+            <div class="flex gap-md mt-md">
+                <button type="submit" class="btn-primary">Enregistrer les modifications</button>
+                <button type="button" class="btn-outline" id="btnCancelEdit">Annuler</button>
+            </div>
         </form>
     </div>
-
-    <div class="table-container">
-        <h3 class="text-primary mb-md">📦 Mes Commandes</h3>
-        <?php if (empty($commandes)): ?>
-            <p class="text-muted">Aucune commande pour le moment.</p>
-        <?php else: ?>
-            <table>
-                <thead>
-                    <tr><th>N°</th><th>Date</th><th>Total</th><th>Paiement</th><th>Statut</th></tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($commandes as $cmd): ?>
-                        <tr>
-                            <td>#<?= $cmd['id'] ?></td>
-                            <td><?= date('d/m/Y H:i', strtotime($cmd['date_commande'])) ?></td>
-                            <td><?= number_format($cmd['total'], 2) ?> DT</td>
-                            <td><?= htmlspecialchars($cmd['methode_paiement']) ?></td>
-                            <td class="font-bold text-success">
-                                <?= ucfirst(str_replace('_', ' ', $cmd['statut'])) ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btnEdit = document.getElementById('btnEditProfile');
+    const btnCancel = document.getElementById('btnCancelEdit');
+    const form = document.getElementById('editProfileForm');
+    const info = document.getElementById('profileInfo');
+
+    btnEdit.addEventListener('click', () => {
+        form.style.display = 'block';
+        info.style.display = 'none';
+        btnEdit.style.display = 'none';
+        form.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    btnCancel.addEventListener('click', () => {
+        form.style.display = 'none';
+        info.style.display = 'grid';
+        btnEdit.style.display = 'inline-flex';
+    });
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
