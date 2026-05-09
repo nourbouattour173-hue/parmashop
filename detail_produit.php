@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "Produit - PharmaShop";
 require_once __DIR__ . '/includes/db.php';
-require_once __DIR__ . '/includes/header.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 $id = (int)($_GET['id'] ?? 0);
 if ($id === 0) { header("Location: " . BASE_URL . "produits.php"); exit(); }
@@ -19,6 +19,7 @@ $stmt->execute([$id]);
 $produit = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$produit) {
+    require_once __DIR__ . '/includes/header.php';
     echo "<div class='container'><div class='alert alert-error'>Produit introuvable.</div></div>";
     require_once __DIR__ . '/includes/footer.php';
     exit();
@@ -109,6 +110,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $msg = "fav_removed";
     }
 }
+
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="container">

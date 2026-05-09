@@ -19,12 +19,12 @@ $subcatId    = $_GET['sous_categorie'] ?? '';
     <input type="hidden" name="sous_categorie" value="<?= htmlspecialchars($subcatId) ?>">
 
     <div class="filter-section">
-        <h3>🔍 Recherche</h3>
+        <h3>Recherche</h3>
         <input type="text" name="q" value="<?= htmlspecialchars($recherche) ?>" placeholder="Nom du produit...">
     </div>
 
     <div class="filter-section">
-        <h3>🏷️ Marques</h3>
+        <h3>Marques</h3>
         <select name="marque">
             <option value="">Toutes marques</option>
             <?php foreach ($marques as $m): ?>
@@ -36,7 +36,7 @@ $subcatId    = $_GET['sous_categorie'] ?? '';
     </div>
 
     <div class="filter-section">
-        <h3>✨ Type de peau</h3>
+        <h3>Type de peau</h3>
         <select name="skin_type">
             <option value="">Tous types</option>
             <?php foreach ($skin_types as $st): ?>
@@ -48,7 +48,7 @@ $subcatId    = $_GET['sous_categorie'] ?? '';
     </div>
 
     <div class="filter-section">
-        <h3>💰 Prix (DT)</h3>
+        <h3>Prix (DT)</h3>
         <div class="price-inputs">
             <input type="number" name="min_price" value="<?= htmlspecialchars($minPrice) ?>" placeholder="Min">
             <span>-</span>

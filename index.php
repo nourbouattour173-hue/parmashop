@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "PharmaShop - Accueil";
 require_once __DIR__ . '/includes/db.php';
-require_once __DIR__ . '/includes/header.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 // Traitement POST (Ajout Panier / Favoris)
 $msg = "";
@@ -95,6 +95,8 @@ if (isset($_SESSION['user_id'])) {
     $favStmt->execute([$_SESSION['user_id']]);
     $favorisProduits = $favStmt->fetchAll(PDO::FETCH_COLUMN);
 }
+
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="hero">

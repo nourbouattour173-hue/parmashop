@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/auth_check.php';
 require_once __DIR__ . '/includes/db.php';
-$pageTitle = "Mon Panier - PharmaShop";
-require_once __DIR__ . '/includes/header.php';
 
 if (isset($_GET['supprimer'])) {
     unset($_SESSION['panier'][$_GET['supprimer']]);
@@ -19,6 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_panier'])) {
     header("Location: " . BASE_URL . "panier.php");
     exit();
 }
+
+$pageTitle = "Mon Panier - PharmaShop";
+require_once __DIR__ . '/includes/header.php';
 
 $panier = $_SESSION['panier'] ?? [];
 $total  = 0;
@@ -70,9 +71,6 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
                     <?php endforeach; ?>
                 </tbody>
             </table>
-        </div>
-        <div class="text-right mt-lg">
-            <button type="submit" name="maj_panier" class="btn-warning"><i class="fas fa-sync-alt"></i> Mettre à jour</button>
         </div>
         </form>
 

@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "Mes Favoris - PharmaShop";
 require_once __DIR__ . '/includes/db.php';
-require_once __DIR__ . '/includes/header.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: " . BASE_URL . "login.php");
@@ -17,6 +17,8 @@ if (isset($_GET['remove'])) {
     header("Location: favoris.php");
     exit();
 }
+
+require_once __DIR__ . '/includes/header.php';
 
 // Récupérer les favoris avec les détails produits
 $sql = "

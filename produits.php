@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "Nos Produits - PharmaShop";
 require_once __DIR__ . '/includes/db.php';
-require_once __DIR__ . '/includes/header.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 $categorieId = $_GET['categorie'] ?? '';
 $subcatId    = $_GET['sous_categorie'] ?? '';
@@ -102,6 +102,8 @@ if (!empty($categorieId)) {
     $sStmt->execute([$categorieId]);
     $subcategories = $sStmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="container">
