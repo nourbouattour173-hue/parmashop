@@ -55,11 +55,13 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
                             <td><?= htmlspecialchars($item['contenance'] ?? '') ?></td>
                             <td><?= number_format($item['prix'], 2) ?> DT</td>
                             <td>
+                                <input type="hidden" name="maj_panier" value="1">
                                 <input type="number"
                                        name="quantites[<?= htmlspecialchars($cle) ?>]"
                                        value="<?= $item['quantite'] ?>"
                                        min="0" max="50"
-                                       class="cart-qty-input">
+                                       class="cart-qty-input"
+                                       onchange="this.form.submit()">
                             </td>
                             <td><strong class="text-primary"><?= number_format($item['prix'] * $item['quantite'], 2) ?> DT</strong></td>
                             <td>

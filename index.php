@@ -14,16 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['ajouter_panier'])) {
         $variantId = (int)$_POST['variant_id'];
         $productId = (int)$_POST['product_id'];
+        $quantite  = isset($_POST['quantite']) ? max(1, (int)$_POST['quantite']) : 1;
         
         $vStmt = $pdo->prepare("SELECT * FROM product_variants WHERE id = ? AND product_id = ?");
         $vStmt->execute([$variantId, $productId]);
         $variant = $vStmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($variant && $variant['stock'] > 0) {
+        if ($variant && $variant['stock'] >= $quantite) {
             if (!isset($_SESSION['panier'])) $_SESSION['panier'] = [];
             $cle = "v$variantId";
             if (isset($_SESSION['panier'][$cle])) {
-                $_SESSION['panier'][$cle]['quantite'] += 1;
+                $_SESSION['panier'][$cle]['quantite'] += $quantite;
             } else {
                 $pStmt = $pdo->prepare("SELECT nom FROM products WHERE id = ?");
                 $pStmt->execute([$productId]);
@@ -39,11 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'nom'        => $pNom,
                     'contenance' => $variant['contenance'],
                     'prix'       => $variant['prix'],
-                    'quantite'   => 1,
+                    'quantite'   => $quantite,
                     'image'      => $pImage
                 ];
             }
             $msg = "success_cart";
+        } elseif ($variant && $variant['stock'] < $quantite) {
+            $msg = "error_stock";
         }
     }
 
@@ -108,6 +111,8 @@ require_once __DIR__ . '/includes/header.php';
 <div class="container">
     <?php if ($msg === 'success_cart'): ?>
         <div class="alert alert-success"><i class="fas fa-cart-check"></i> Produit ajouté au panier !</div>
+    <?php elseif ($msg === 'error_stock'): ?>
+        <div class="alert alert-error"><i class="fas fa-exclamation-triangle"></i> Stock insuffisant.</div>
     <?php elseif ($msg === 'success_fav'): ?>
         <div class="alert alert-success"><i class="fas fa-heart"></i> Ajouté aux favoris !</div>
     <?php elseif ($msg === 'already_fav'): ?>
@@ -145,10 +150,11 @@ require_once __DIR__ . '/includes/header.php';
                     </p>
                     
                     <div class="card-actions">
-                        <form method="POST" class="flex-1">
+                        <form method="POST" class="flex-1" style="display: flex; gap: 8px;">
                             <input type="hidden" name="variant_id" value="<?= $prod['variant_id'] ?>">
                             <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">
-                            <button type="submit" name="ajouter_panier" class="btn-primary btn-sm w-100">
+                            <input type="number" name="quantite" value="1" min="1" max="50" style="width: 50px; padding: 4px; border: 1px solid var(--color-border-light); border-radius: var(--radius-sm); text-align: center;">
+                            <button type="submit" name="ajouter_panier" class="btn-primary btn-sm" style="flex: 1;">
                                 <i class="bi bi-cart-plus"></i> Panier
                             </button>
                         </form>

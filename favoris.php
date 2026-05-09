@@ -64,10 +64,11 @@ $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </p>
                         
                         <div class="card-actions">
-                            <form method="POST" action="produits.php" class="flex-1">
+                            <form method="POST" action="produits.php" class="flex-1" style="display: flex; gap: 8px;">
                                 <input type="hidden" name="variant_id" value="<?= $prod['variant_id'] ?>">
                                 <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">
-                                <button type="submit" name="ajouter_panier" class="btn-primary btn-sm w-100">
+                                <input type="number" name="quantite" value="1" min="1" max="50" style="width: 50px; padding: 4px; border: 1px solid var(--color-border-light); border-radius: var(--radius-sm); text-align: center;">
+                                <button type="submit" name="ajouter_panier" class="btn-primary btn-sm" style="flex: 1;">
                                     <i class="bi bi-cart-plus"></i> Panier
                                 </button>
                             </form>
