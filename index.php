@@ -60,6 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg = "already_fav";
         }
     }
+
+    if (isset($_POST['retirer_favoris'])) {
+        $productId = (int)$_POST['product_id'];
+        $userId = $_SESSION['user_id'];
+        $pdo->prepare("DELETE FROM favoris WHERE user_id = ? AND product_id = ?")->execute([$userId, $productId]);
+        $msg = "removed_fav";
+    }
 }
 
 // 8 derniers produits
@@ -80,6 +87,14 @@ $produits = $pdo->query("
 
 // Catégories
 $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAll(PDO::FETCH_ASSOC);
+
+// Récupérer les favoris de l'utilisateur connecté (tableau d'IDs)
+$favorisProduits = [];
+if (isset($_SESSION['user_id'])) {
+    $favStmt = $pdo->prepare("SELECT product_id FROM favoris WHERE user_id = ?");
+    $favStmt->execute([$_SESSION['user_id']]);
+    $favorisProduits = $favStmt->fetchAll(PDO::FETCH_COLUMN);
+}
 ?>
 
 <div class="hero">
@@ -95,6 +110,8 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
         <div class="alert alert-success"><i class="bi bi-heart-fill"></i> Ajouté aux favoris !</div>
     <?php elseif ($msg === 'already_fav'): ?>
         <div class="alert alert-info"><i class="bi bi-info-circle"></i> Déjà dans vos favoris.</div>
+    <?php elseif ($msg === 'removed_fav'): ?>
+        <div class="alert alert-info"><i class="bi bi-heart"></i> Retiré des favoris.</div>
     <?php endif; ?>
 
     <h2 class="section-title"><i class="bi bi-grid-3x3-gap"></i> Nos Rayons</h2>
@@ -109,6 +126,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
     <h2 class="section-title"><i class="bi bi-star"></i> Nouveaux produits</h2>
     <div class="products-grid">
         <?php foreach ($produits as $prod): ?>
+            <?php $enFavori = in_array($prod['id'], $favorisProduits); ?>
             <div class="product-card">
                 <a href="<?= BASE_URL ?>detail_produit.php?id=<?= $prod['id'] ?>" class="card-image-link">
                     <img src="<?= htmlspecialchars($prod['image'] ?? '') ?>"
@@ -134,9 +152,21 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAl
                         </form>
                         <form method="POST">
                             <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">
-                            <button type="submit" name="ajouter_favoris" class="btn-favorite" title="Ajouter aux favoris">
-                                <i class="bi bi-heart"></i>
-                            </button>
+                            <?php if ($enFavori): ?>
+                                <!-- Produit déjà en favori : icône rouge, permet de retirer -->
+                                <button type="submit" name="retirer_favoris"
+                                        class="btn-favorite btn-favorite--active"
+                                        title="Retirer des favoris">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            <?php else: ?>
+                                <!-- Produit pas encore en favori : icône outline -->
+                                <button type="submit" name="ajouter_favoris"
+                                        class="btn-favorite"
+                                        title="Ajouter aux favoris">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            <?php endif; ?>
                         </form>
                     </div>
                 </div>
