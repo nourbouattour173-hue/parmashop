@@ -22,7 +22,7 @@ $sql = "
 ";
 $params = [];
 if (!empty($recherche)) { $sql .= " AND p.nom LIKE ?"; $params[] = "%$recherche%"; }
-$sql .= " GROUP BY p.id ORDER BY p.id DESC";
+$sql .= " GROUP BY p.id, p.nom, b.nom, c.nom ORDER BY p.id DESC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);

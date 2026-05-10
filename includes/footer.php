@@ -25,14 +25,6 @@
                     <li><a href="<?= BASE_URL ?>panier.php">Mon panier</a></li>
                 </ul>
             </div>
-            <div class="footer-links">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="#">Aide & FAQ</a></li>
-                    <li><a href="#">Livraison</a></li>
-                    <li><a href="#">Paiement</a></li>
-                </ul>
-            </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; <?= date('Y') ?> PharmaShop — Tous droits réservés</p>

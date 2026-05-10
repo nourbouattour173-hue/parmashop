@@ -84,7 +84,7 @@ if (!empty($skinTypeId))  { $sql .= " AND pst.skin_type_id = ?"; $params[] = $sk
 if (!empty($minPrice))    { $sql .= " AND pv.prix >= ?";      $params[] = $minPrice; }
 if (!empty($maxPrice))    { $sql .= " AND pv.prix <= ?";      $params[] = $maxPrice; }
 
-$sql .= " GROUP BY p.id ORDER BY p.nom";
+$sql .= " ORDER BY p.nom";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);

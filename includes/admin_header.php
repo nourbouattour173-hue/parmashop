@@ -32,7 +32,7 @@ $style_version = file_exists($style_file) ? filemtime($style_file) : time();
                 <div class="logo-icon" style="background: var(--color-accent);">
                     <i class="fas fa-leaf" style="color: var(--color-secondary);"></i>
                 </div>
-                Pharma<span style="color: var(--color-accent);">Shop</span> <small style="font-size: 0.5em; opacity: 0.8; margin-left: 10px;">ADMIN</small>
+                Pharma<span style="color: var(--color-accent);">Shop</span>
             </a>
             
             <div class="navbar-nav">
