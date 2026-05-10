@@ -1,19 +1,19 @@
-// ============================================
-// PHARMASHOP — Main JavaScript
-// ============================================
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ══════════════════════════════════════════
-  // 1. MENU MOBILE (Hamburger + Drawer)
-  // ══════════════════════════════════════════
+  
+  
+  
 
   const hamburgerBtn    = document.getElementById('hamburgerBtn');
   const categoryBar     = document.getElementById('categoryBar');
   const categoryOverlay = document.getElementById('categoryOverlay');
   const closeBtn        = document.getElementById('categoryBarClose');
 
-  // ✅ Vérification null safety avant tout
+  
   if (hamburgerBtn && categoryBar && categoryOverlay && closeBtn) {
     const categoryItems = document.querySelectorAll('.category-bar-item.has-children');
 
@@ -54,15 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
     categoryOverlay.addEventListener('click', closeMenu);
     closeBtn.addEventListener('click', closeMenu);
 
-    // Fermer avec Escape
+    
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && categoryBar.classList.contains('open')) {
         closeMenu();
-        hamburgerBtn.focus(); // ✅ Retour focus accessibilité
+        hamburgerBtn.focus(); 
       }
     });
 
-    // ── Sous-catégories au clic (desktop + mobile) ──
+    
     categoryItems.forEach(item => {
       const link = item.querySelector('.category-bar-link');
       if (!link) return;
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // ── Resize avec debounce ✅ ──
+    
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
@@ -113,11 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 150);
     });
 
-  } // fin null safety menu
+  } 
 
-  // ══════════════════════════════════════════
-  // 2. FILTRES — Auto-submit
-  // ══════════════════════════════════════════
+  
+  
+  
 
   document.querySelectorAll('.filter-form input[type="radio"]')
     .forEach(input => {
@@ -133,15 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-  // ══════════════════════════════════════════
-  // 3. MÉTHODE DE PAIEMENT — Mise en évidence
-  // ══════════════════════════════════════════
+  
+  
+  
 
   const paymentRadios = document.querySelectorAll('input[name="methode"]');
 
   if (paymentRadios.length > 0) {
     function updatePaymentHighlight(selected) {
-      // Réinitialiser tous les labels
+      
       paymentRadios.forEach(radio => {
         const label = radio.closest('label') || radio.closest('.payment-option');
         if (label) {
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // Mettre en évidence le sélectionné
+      
       const label = selected.closest('label') || selected.closest('.payment-option');
       if (label) {
         label.style.borderColor = 'var(--color-primary)';
@@ -163,18 +163,18 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePaymentHighlight(this);
       });
 
-      // Appliquer au chargement si déjà coché
+      
       if (radio.checked) updatePaymentHighlight(radio);
     });
   }
 
-  // ══════════════════════════════════════════
-  // 4. ALERTES — Auto-masquage après 5s
-  // ══════════════════════════════════════════
+  
+  
+  
 
   document.querySelectorAll('.alert[data-auto-hide]').forEach(alertEl => {
-    // ✅ Uniquement les alertes avec data-auto-hide
-    // Pour forcer sur toutes : supprimer [data-auto-hide]
+    
+    
     const delay = parseInt(alertEl.dataset.autoHide) || 5000;
 
     setTimeout(() => {
@@ -185,9 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, delay);
   });
 
-  // ══════════════════════════════════════════
-  // 5. GALERIE PRODUIT — Images miniatures
-  // ══════════════════════════════════════════
+  
+  
+  
 
   const mainImage = document.getElementById('main-image');
 
@@ -197,14 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const newSrc = this.dataset.src;
         if (!newSrc) return;
 
-        // ✅ Animation de transition
+        
         mainImage.style.opacity = '0';
         setTimeout(() => {
           mainImage.src         = newSrc;
           mainImage.style.opacity = '1';
         }, 200);
 
-        // Mettre à jour l'état actif
+        
         document.querySelectorAll('.thumb-img').forEach(t => {
           t.classList.remove('active');
           t.setAttribute('aria-selected', 'false');
@@ -214,23 +214,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Transition CSS pour l'image principale
+    
     mainImage.style.transition = 'opacity 0.2s ease';
   }
 
-  // ══════════════════════════════════════════
-  // 6. BACK-TO-TOP
-  // ══════════════════════════════════════════
+  
+  
+  
 
   const topBtn = document.createElement('button');
   topBtn.innerHTML  = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
   topBtn.title      = 'Retour en haut de page';
-  topBtn.className  = 'back-to-top'; // ✅ Classe CSS au lieu de styles inline
+  topBtn.className  = 'back-to-top'; 
   topBtn.setAttribute('aria-label', 'Retour en haut de page');
-  topBtn.setAttribute('aria-hidden', 'true'); // Caché par défaut
+  topBtn.setAttribute('aria-hidden', 'true'); 
   document.body.appendChild(topBtn);
 
-  let ticking = false; // ✅ Optimisation scroll avec requestAnimationFrame
+  let ticking = false; 
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   topBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // ✅ Focus sur le premier élément focusable après le scroll
+    
     setTimeout(() => {
       const firstFocusable = document.querySelector(
         'a[href], button:not([disabled]), input, [tabindex="0"]'
@@ -254,9 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
   });
 
-  // ══════════════════════════════════════════
-  // 7. LAZY LOADING DES IMAGES
-  // ══════════════════════════════════════════
+  
+  
+  
 
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -267,12 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (img.dataset.src) {
           img.src = img.dataset.src;
           img.removeAttribute('data-src');
-          img.classList.add('loaded'); // ✅ Classe pour animation CSS
+          img.classList.add('loaded'); 
         }
         observer.unobserve(img);
       });
     }, {
-      rootMargin: '100px', // Charger 100px avant d'être visible
+      rootMargin: '100px', 
       threshold: 0.01
     });
 
@@ -280,16 +280,16 @@ document.addEventListener('DOMContentLoaded', () => {
       .forEach(img => imageObserver.observe(img));
 
   } else {
-    // ✅ Fallback pour navigateurs sans IntersectionObserver
+    
     document.querySelectorAll('img[data-src]').forEach(img => {
       img.src = img.dataset.src;
       img.removeAttribute('data-src');
     });
   }
 
-  // ══════════════════════════════════════════
-  // 8. QUANTITÉ PRODUIT — Boutons +/-
-  // ══════════════════════════════════════════
+  
+  
+  
 
   document.querySelectorAll('.qty-wrapper').forEach(wrapper => {
     const input   = wrapper.querySelector('.qty-input');
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Empêcher valeurs invalides
+    
     input.addEventListener('change', () => {
       const min = parseInt(input.min) || 1;
       const max = parseInt(input.max) || 99;
@@ -326,9 +326,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ══════════════════════════════════════════
-  // 9. CONFIRMATION SUPPRESSION
-  // ══════════════════════════════════════════
+  
+  
+  
 
   document.querySelectorAll('[data-confirm]').forEach(el => {
     el.addEventListener('click', e => {

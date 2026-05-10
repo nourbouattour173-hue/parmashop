@@ -19,15 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($nom) || empty($contenance) || $prix <= 0) {
         $erreur = "Nom, contenance et prix sont obligatoires.";
     } else {
-        // Insérer le produit
+        
         $pdo->prepare("INSERT INTO products (nom, description, brand_id, category_id) VALUES (?,?,?,?)")
             ->execute([$nom, $description, $brand_id, $category_id]);
         $newId = $pdo->lastInsertId();
 
-        // Référence unique
+        
         $ref = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '-', $nom), 0, 15)) . '-' . $newId;
 
-        // Insérer la variante — colonne contenance (pas taille)
+        
         $pdo->prepare("INSERT INTO product_variants (product_id, reference, prix, stock, contenance) VALUES (?,?,?,?,?)")
             ->execute([$newId, $ref, $prix, $stock, $contenance]);
 

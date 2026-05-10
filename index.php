@@ -3,7 +3,7 @@ $pageTitle = "PharmaShop - Accueil";
 require_once __DIR__ . '/includes/db.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-// Traitement POST (Ajout Panier / Favoris)
+
 $msg = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user_id'])) {
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// 8 derniers produits
+
 $produits = $pdo->query("
     SELECT p.id, p.nom, b.nom AS marque,
            pv.prix AS prix_min,
@@ -87,10 +87,10 @@ $produits = $pdo->query("
     LIMIT 8
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-// Catégories
+
 $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupérer les favoris de l'utilisateur connecté (tableau d'IDs)
+
 $favorisProduits = [];
 if (isset($_SESSION['user_id'])) {
     $favStmt = $pdo->prepare("SELECT product_id FROM favoris WHERE user_id = ?");
@@ -160,14 +160,14 @@ require_once __DIR__ . '/includes/header.php';
                         <form method="POST">
                             <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">
                             <?php if ($enFavori): ?>
-                                <!-- Produit déjà en favori : icône rouge, permet de retirer -->
+                                
                                 <button type="submit" name="retirer_favoris"
                                         class="btn-favorite btn-favorite--active"
                                         title="Retirer des favoris">
                                     <i class="bi bi-heart-fill"></i>
                                 </button>
                             <?php else: ?>
-                                <!-- Produit pas encore en favori : icône outline -->
+                                
                                 <button type="submit" name="ajouter_favoris"
                                         class="btn-favorite"
                                         title="Ajouter aux favoris">

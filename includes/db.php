@@ -1,5 +1,5 @@
 <?php
-// Connexion PDO à la base de données
+
 $host   = "localhost";
 $dbname = "parapharmacie_db";
 $user   = "root";
@@ -12,7 +12,7 @@ try {
     die("Erreur connexion : " . $e->getMessage());
 }
 
-// Définition dynamique de la BASE_URL pour assurer la portabilité du projet
+
 if (!defined('BASE_URL')) {
     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
     $host = $_SERVER['HTTP_HOST'];

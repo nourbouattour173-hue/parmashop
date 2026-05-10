@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Commandes
+
 $cmdStmt = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY date_commande DESC");
 $cmdStmt->execute([$_SESSION['user_id']]);
 $commandes = $cmdStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -59,7 +59,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php if ($succes): ?><div class="alert alert-success" data-auto-hide="5000"><?= htmlspecialchars($succes) ?></div><?php endif; ?>
     <?php if ($erreur): ?><div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div><?php endif; ?>
 
-    <!-- Affichage des coordonnées -->
+    
     <div class="profile-card" id="profileInfo">
         <div class="profile-info-item">
             <span class="label">Nom complet</span>
@@ -87,7 +87,7 @@ require_once __DIR__ . '/includes/header.php';
         </a>
     </div>
 
-    <!-- Formulaire de modification (masqué par défaut) -->
+    
     <div class="table-container mb-lg" id="editProfileForm" style="display:none;">
         <h3 class="text-primary mb-md">Modifier mes informations</h3>
         <form method="POST">

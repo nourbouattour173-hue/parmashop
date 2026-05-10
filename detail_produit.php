@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 $id = (int)($_GET['id'] ?? 0);
 if ($id === 0) { header("Location: " . BASE_URL . "produits.php"); exit(); }
 
-// Récupérer le produit
+
 $stmt = $pdo->prepare("
     SELECT p.*, b.nom AS marque, c.nom AS categorie, sc.nom AS sous_categorie
     FROM products p
@@ -25,7 +25,7 @@ if (!$produit) {
     exit();
 }
 
-// Récupérer types de peau
+
 $stStmt = $pdo->prepare("
     SELECT st.nom 
     FROM skin_types st
@@ -35,18 +35,18 @@ $stStmt = $pdo->prepare("
 $stStmt->execute([$id]);
 $skin_types = $stStmt->fetchAll(PDO::FETCH_COLUMN);
 
-// Récupérer toutes les images
+
 $iStmt = $pdo->prepare("SELECT image_path, is_main FROM product_images WHERE product_id = ? ORDER BY is_main DESC");
 $iStmt->execute([$id]);
 $images = $iStmt->fetchAll(PDO::FETCH_ASSOC);
 $imagePrincipale = $images[0]['image_path'] ?? '';
 
-// Variantes
+
 $vStmt = $pdo->prepare("SELECT * FROM product_variants WHERE product_id = ? ORDER BY prix");
 $vStmt->execute([$id]);
 $variantes = $vStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Vérifier si le produit est en favori pour l'utilisateur connecté
+
 $enFavori = false;
 if (isset($_SESSION['user_id'])) {
     $favChk = $pdo->prepare("SELECT id FROM favoris WHERE user_id = ? AND product_id = ?");
@@ -54,7 +54,7 @@ if (isset($_SESSION['user_id'])) {
     $enFavori = (bool)$favChk->fetch();
 }
 
-// Ajout au panier / gestion favoris
+
 $msg = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user_id'])) {
@@ -201,7 +201,7 @@ require_once __DIR__ . '/includes/header.php';
                 </form>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <!-- Bouton favori séparé du formulaire panier -->
+                    
                     <form method="POST" style="margin-top: 12px;">
                         <?php if ($enFavori): ?>
                             <button type="submit" name="retirer_favoris" class="btn-favorite btn-favorite--active btn-favorite--large" title="Retirer des favoris">

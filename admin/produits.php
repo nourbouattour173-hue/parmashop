@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/admin_check.php';
 $pageTitle = "Produits - Admin";
 require_once __DIR__ . '/../includes/db.php';
 
-// Suppression
+
 if (isset($_GET['supprimer'])) {
     $pdo->prepare("DELETE FROM products WHERE id = ?")->execute([(int)$_GET['supprimer']]);
     header("Location: " . BASE_URL . "admin/produits.php?msg=supprime");

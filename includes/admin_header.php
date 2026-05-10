@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/db.php';
 
-// CSS Versioning
+
 $style_file = __DIR__ . '/../assets/css/style.css';
 $style_version = file_exists($style_file) ? filemtime($style_file) : time();
 ?>
@@ -13,16 +13,16 @@ $style_version = file_exists($style_file) ? filemtime($style_file) : time();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : 'Administration - PharmaShop' ?></title>
     
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    <!-- CSS Principal -->
+    
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= $style_version ?>">
 </head>
 <body class="admin-body">

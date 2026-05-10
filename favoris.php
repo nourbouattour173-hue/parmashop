@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
-// Suppression d'un favori
+
 if (isset($_GET['remove'])) {
     $fId = (int)$_GET['remove'];
     $pdo->prepare("DELETE FROM favoris WHERE id = ? AND user_id = ?")->execute([$fId, $userId]);
@@ -20,7 +20,7 @@ if (isset($_GET['remove'])) {
 
 require_once __DIR__ . '/includes/header.php';
 
-// Récupérer les favoris avec les détails produits
+
 $sql = "
     SELECT f.id AS fav_id, p.*, b.nom AS marque,
            pv.prix AS prix_min,

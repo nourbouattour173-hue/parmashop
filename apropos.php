@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/db.php';
 $pageTitle = "À Propos - PharmaShop";
 require_once __DIR__ . '/includes/header.php';
 
-// Récupérer quelques marques pour la section partenaires
+
 $brands_stmt = $pdo->query("SELECT nom FROM brands ORDER BY nom LIMIT 8");
 $brands_ap   = $brands_stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
