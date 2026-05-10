@@ -83,7 +83,6 @@ $produits = $pdo->query("
     LEFT JOIN product_variants pv ON pv.id = (
         SELECT id FROM product_variants WHERE product_id = p.id ORDER BY prix ASC LIMIT 1
     )
-    GROUP BY p.id
     ORDER BY p.created_at DESC
     LIMIT 8
 ")->fetchAll(PDO::FETCH_ASSOC);

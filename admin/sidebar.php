@@ -9,7 +9,5 @@
         <a href="<?= BASE_URL ?>admin/utilisateurs.php"     class="<?= $p==='utilisateurs.php'?'active':'' ?>"><i class="fas fa-users"></i> Utilisateurs</a>
         <a href="<?= BASE_URL ?>admin/messages.php"         class="<?= $p==='messages.php'?'active':'' ?>"><i class="fas fa-envelope"></i> Messages</a>
         <div class="sidebar-divider"></div>
-        <a href="<?= BASE_URL ?>index.php"><i class="fas fa-globe"></i> Voir le site</a>
-        <a href="<?= BASE_URL ?>logout.php" class="btn-deconnexion-sidebar"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
     </nav>
 </div>
