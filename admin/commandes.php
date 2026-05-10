@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_statut'])) {
     if (in_array($statut, $statutsValides)) {
         $pdo->prepare("UPDATE orders SET statut=? WHERE id=?")->execute([$statut, (int)$_POST['order_id']]);
     }
-    header("Location: http://localhost/parapharmacie/admin/commandes.php?msg=ok");
+    header("Location: " . BASE_URL . "admin/commandes.php?msg=ok");
     exit();
 }
 
@@ -20,13 +20,13 @@ $commandes = $pdo->query("
     ORDER BY o.date_commande DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:20px;">🛒 Gestion des Commandes</h1>
+        <h1 style="color:#1b5e20; margin-bottom:20px;"><i class="bi bi-cart"></i> Gestion des Commandes</h1>
 
         <?php if (($_GET['msg'] ?? '') === 'ok'): ?>
             <div class="alert alert-success">Statut mis à jour.</div>

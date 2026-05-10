@@ -9,7 +9,7 @@ if (isset($_GET['supprimer'])) {
         $msgErr = "Vous ne pouvez pas supprimer votre propre compte.";
     } else {
         $pdo->prepare("DELETE FROM users WHERE id = ?")->execute([$uid]);
-        header("Location: http://localhost/parapharmacie/admin/utilisateurs.php?msg=supprime");
+        header("Location: " . BASE_URL . "admin/utilisateurs.php?msg=supprime");
         exit();
     }
 }
@@ -22,13 +22,13 @@ $users = $pdo->query("
     ORDER BY u.created_at DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:20px;">👥 Gestion des Utilisateurs</h1>
+        <h1 style="color:#1b5e20; margin-bottom:20px;"><i class="bi bi-people"></i> Gestion des Utilisateurs</h1>
 
         <?php if (($_GET['msg'] ?? '') === 'supprime'): ?>
             <div class="alert alert-success">Utilisateur supprimé.</div>
@@ -59,9 +59,9 @@ require_once __DIR__ . '/../includes/header.php';
                             <td><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
                             <td>
                                 <?php if ($u['id'] != $_SESSION['user_id']): ?>
-                                    <a href="http://localhost/parapharmacie/admin/utilisateurs.php?supprimer=<?= $u['id'] ?>"
+                                    <a href="<?= BASE_URL ?>admin/utilisateurs.php?supprimer=<?= $u['id'] ?>"
                                        class="btn-danger" style="font-size:13px;"
-                                       onclick="return confirm('Supprimer cet utilisateur ?')">🗑️ Supprimer</a>
+                                       onclick="return confirm('Supprimer cet utilisateur ?')"><i class="bi bi-trash"></i> Supprimer</a>
                                 <?php else: ?>
                                     <span style="color:#aaa; font-size:13px;">(vous)</span>
                                 <?php endif; ?>

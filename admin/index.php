@@ -16,32 +16,33 @@ $dernieres = $pdo->query("
     LIMIT 5
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:25px;">📊 Tableau de bord</h1>
+        <h1 style="color:#1b5e20; margin-bottom:25px;"><i class="bi bi-speedometer2"></i> Tableau de bord</h1>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:20px; margin-bottom:35px;">
+        <div class="stat-grid">
             <?php foreach ([
-                ['📦', $nbProduits,              'Produits',          '#2e7d32'],
-                ['👥', $nbUsers,                 'Clients',           '#1565c0'],
-                ['🛒', $nbCommandes,             'Commandes',         '#f57f17'],
-                ['💰', number_format($chiffreAff,2).' DT', 'Chiffre d\'affaires', '#6a1b9a'],
+                ['bi-box-seam', $nbProduits,              'Produits',          'var(--color-success)'],
+                ['bi-people', $nbUsers,                 'Clients',           'var(--color-info)'],
+                ['bi-cart', $nbCommandes,             'Commandes',         'var(--color-warning)'],
+                ['bi-cash-stack', number_format($chiffreAff,2).' DT', 'CA Global', 'var(--color-secondary-light)'],
             ] as $stat): ?>
-                <div style="background:white; border-radius:10px; padding:25px; text-align:center;
-                            box-shadow:0 2px 8px rgba(0,0,0,0.07); border-top:4px solid <?= $stat[3] ?>;">
-                    <div style="font-size:35px;"><?= $stat[0] ?></div>
-                    <div style="font-size:28px; font-weight:bold; color:<?= $stat[3] ?>;"><?= $stat[1] ?></div>
-                    <div style="color:#888;"><?= $stat[2] ?></div>
+                <div class="stat-card" style="--accent: <?= $stat[3] ?>;">
+                    <div class="stat-icon"><i class="bi <?= $stat[0] ?>"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value"><?= $stat[1] ?></div>
+                        <div class="stat-label"><?= $stat[2] ?></div>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <div class="table-container">
-            <h3 style="color:#1b5e20; margin-bottom:15px;">🕐 Dernières commandes</h3>
+            <h3 style="color:#1b5e20; margin-bottom:15px;"><i class="bi bi-clock-history"></i> Dernières commandes</h3>
             <table>
                 <thead><tr><th>N°</th><th>Client</th><th>Date</th><th>Total</th><th>Statut</th></tr></thead>
                 <tbody>
@@ -57,7 +58,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </tbody>
             </table>
             <div style="margin-top:15px;">
-                <a href="http://localhost/parapharmacie/admin/commandes.php" style="color:#2e7d32;">Voir toutes les commandes →</a>
+                <a href="<?= BASE_URL ?>admin/commandes.php" style="color:#2e7d32;">Voir toutes les commandes</a>
             </div>
         </div>
     </div>

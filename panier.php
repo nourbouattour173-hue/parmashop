@@ -1,11 +1,10 @@
 <?php
 require_once __DIR__ . '/includes/auth_check.php';
-$pageTitle = "Mon Panier - PharmaShop";
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/db.php';
 
 if (isset($_GET['supprimer'])) {
     unset($_SESSION['panier'][$_GET['supprimer']]);
-    header("Location: http://localhost/parapharmacie/panier.php");
+    header("Location: " . BASE_URL . "panier.php");
     exit();
 }
 
@@ -15,9 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_panier'])) {
         if ($qte <= 0) unset($_SESSION['panier'][$cle]);
         else           $_SESSION['panier'][$cle]['quantite'] = $qte;
     }
-    header("Location: http://localhost/parapharmacie/panier.php");
+    header("Location: " . BASE_URL . "panier.php");
     exit();
 }
+
+$pageTitle = "Mon Panier - PharmaShop";
+require_once __DIR__ . '/includes/header.php';
 
 $panier = $_SESSION['panier'] ?? [];
 $total  = 0;
@@ -25,12 +27,12 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
 ?>
 
 <div class="container">
-    <h1 class="section-title">🛒 Mon Panier</h1>
+    <h1 class="section-title"><i class="fas fa-shopping-cart"></i> Mon Panier</h1>
 
     <?php if (empty($panier)): ?>
         <div class="alert alert-info">
             Votre panier est vide.
-            <a href="http://localhost/parapharmacie/produits.php">→ Continuer mes achats</a>
+            <a href="<?= BASE_URL ?>produits.php">Continuer mes achats</a>
         </div>
     <?php else: ?>
         <form method="POST">
@@ -53,35 +55,34 @@ foreach ($panier as $item) $total += $item['prix'] * $item['quantite'];
                             <td><?= htmlspecialchars($item['contenance'] ?? '') ?></td>
                             <td><?= number_format($item['prix'], 2) ?> DT</td>
                             <td>
+                                <input type="hidden" name="maj_panier" value="1">
                                 <input type="number"
                                        name="quantites[<?= htmlspecialchars($cle) ?>]"
                                        value="<?= $item['quantite'] ?>"
                                        min="0" max="50"
-                                       style="width:65px; padding:5px; border:1px solid #ccc; border-radius:4px;">
+                                       class="cart-qty-input"
+                                       onchange="this.form.submit()">
                             </td>
-                            <td><strong style="color:#2e7d32;"><?= number_format($item['prix'] * $item['quantite'], 2) ?> DT</strong></td>
+                            <td><strong class="text-primary"><?= number_format($item['prix'] * $item['quantite'], 2) ?> DT</strong></td>
                             <td>
-                                <a href="http://localhost/parapharmacie/panier.php?supprimer=<?= urlencode($cle) ?>"
-                                   class="btn-danger" style="font-size:13px;"
-                                   onclick="return confirm('Supprimer cet article ?')">🗑️</a>
+                                <a href="<?= BASE_URL ?>panier.php?supprimer=<?= urlencode($cle) ?>"
+                                   class="btn-danger btn-icon"
+                                   onclick="return confirm('Supprimer cet article ?')"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-        <div style="text-align:right; margin-top:10px;">
-            <button type="submit" name="maj_panier" class="btn-warning">🔄 Mettre à jour</button>
-        </div>
         </form>
 
-        <div style="text-align:right; font-size:22px; font-weight:bold; color:#2e7d32; margin:20px 0;">
+        <div class="text-right font-bold mt-lg mb-lg" style="font-size:22px; color:var(--color-primary-dark);">
             Total : <?= number_format($total, 2) ?> DT
         </div>
-        <div style="text-align:right;">
-            <a href="http://localhost/parapharmacie/produits.php" style="color:#888; margin-right:20px;">← Continuer mes achats</a>
-            <a href="http://localhost/parapharmacie/commande.php" class="btn-primary" style="font-size:16px; padding:12px 30px;">
-                ✅ Passer la commande
+        <div class="text-right">
+            <a href="<?= BASE_URL ?>produits.php" class="text-muted mr-lg">← Continuer mes achats</a>
+            <a href="<?= BASE_URL ?>commande.php" class="btn-primary" style="font-size:16px; padding:12px 30px;">
+                Passer la commande
             </a>
         </div>
     <?php endif; ?>

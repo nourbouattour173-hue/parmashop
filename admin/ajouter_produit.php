@@ -31,18 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->prepare("INSERT INTO product_variants (product_id, reference, prix, stock, contenance) VALUES (?,?,?,?,?)")
             ->execute([$newId, $ref, $prix, $stock, $contenance]);
 
-        header("Location: http://localhost/parapharmacie/admin/produits.php?msg=ajoute");
+        header("Location: " . BASE_URL . "admin/produits.php?msg=ajoute");
         exit();
     }
 }
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 style="color:#1b5e20; margin-bottom:25px;">➕ Ajouter un produit</h1>
+        <h1 style="color:#1b5e20; margin-bottom:25px;"><i class="bi bi-plus-circle"></i> Ajouter un produit</h1>
 
         <?php if ($erreur): ?>
             <div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div>
@@ -107,7 +107,7 @@ require_once __DIR__ . '/../includes/header.php';
 
                 <div style="display:flex; gap:15px; margin-top:10px;">
                     <button type="submit" class="btn-primary">✅ Enregistrer</button>
-                    <a href="http://localhost/parapharmacie/admin/produits.php" style="padding:10px 20px; color:#888; text-decoration:none;">Annuler</a>
+                    <a href="<?= BASE_URL ?>admin/produits.php" style="padding:10px 20px; color:#888; text-decoration:none;">Annuler</a>
                 </div>
             </form>
         </div>

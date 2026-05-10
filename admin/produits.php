@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/db.php';
 // Suppression
 if (isset($_GET['supprimer'])) {
     $pdo->prepare("DELETE FROM products WHERE id = ?")->execute([(int)$_GET['supprimer']]);
-    header("Location: http://localhost/parapharmacie/admin/produits.php?msg=supprime");
+    header("Location: " . BASE_URL . "admin/produits.php?msg=supprime");
     exit();
 }
 
@@ -28,15 +28,15 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="admin-layout">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <div class="admin-content">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h1 style="color:#1b5e20;">📦 Gestion des Produits</h1>
-            <a href="http://localhost/parapharmacie/admin/ajouter_produit.php" class="btn-primary">➕ Ajouter</a>
+        <div class="flex justify-between align-center mb-lg">
+            <h1 class="text-primary"><i class="bi bi-box-seam"></i> Gestion des Produits</h1>
+            <a href="<?= BASE_URL ?>admin/ajouter_produit.php" class="btn-primary"><i class="bi bi-plus-circle"></i> Ajouter</a>
         </div>
 
         <?php if (($_GET['msg'] ?? '') === 'supprime'): ?>
@@ -47,17 +47,17 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="alert alert-success">Produit modifié.</div>
         <?php endif; ?>
 
-        <form method="GET" style="display:flex; gap:10px; margin-bottom:20px;">
+        <form method="GET" class="flex gap-sm mb-lg">
             <input type="text" name="q" value="<?= htmlspecialchars($recherche) ?>"
-                   placeholder="🔍 Rechercher..." style="flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:6px;">
+                   placeholder="Rechercher..." class="flex-1">
             <button type="submit" class="btn-primary">Rechercher</button>
             <?php if ($recherche): ?>
-                <a href="http://localhost/parapharmacie/admin/produits.php" style="padding:8px 14px; color:#888; text-decoration:none; align-self:center;">✕</a>
+                <a href="<?= BASE_URL ?>admin/produits.php" class="align-center p-md text-muted">✕</a>
             <?php endif; ?>
         </form>
 
         <div class="table-container">
-            <p style="color:#888; margin-bottom:15px;"><?= count($produits) ?> produit(s)</p>
+            <p class="text-muted mb-sm"><?= count($produits) ?> produit(s)</p>
             <table>
                 <thead>
                     <tr><th>ID</th><th>Nom</th><th>Marque</th><th>Catégorie</th><th>Prix min.</th><th>Variantes</th><th>Actions</th></tr>
@@ -72,11 +72,11 @@ require_once __DIR__ . '/../includes/header.php';
                             <td><?= $prod['prix_min'] ? number_format($prod['prix_min'], 2) . ' DT' : '-' ?></td>
                             <td style="text-align:center;"><?= $prod['nb_variantes'] ?></td>
                             <td style="white-space:nowrap;">
-                                <a href="http://localhost/parapharmacie/admin/modifier_produit.php?id=<?= $prod['id'] ?>" class="btn-warning">✏️ Modifier</a>
+                                <a href="<?= BASE_URL ?>admin/modifier_produit.php?id=<?= $prod['id'] ?>" class="btn-warning"><i class="bi bi-pencil-square"></i> Modifier</a>
                                 &nbsp;
-                                <a href="http://localhost/parapharmacie/admin/produits.php?supprimer=<?= $prod['id'] ?>"
+                                <a href="<?= BASE_URL ?>admin/produits.php?supprimer=<?= $prod['id'] ?>"
                                    class="btn-danger"
-                                   onclick="return confirm('Supprimer ce produit ?')">🗑️ Supprimer</a>
+                                   onclick="return confirm('Supprimer ce produit ?')"><i class="bi bi-trash"></i> Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
