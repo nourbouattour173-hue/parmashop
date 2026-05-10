@@ -142,6 +142,14 @@ $style_version = file_exists($style_file) ? filemtime($style_file) : time();
           <span><?= htmlspecialchars($_SESSION['user_nom'] ?? 'Mon compte') ?></span>
         </a>
 
+        <!-- Cookie : dernière connexion -->
+        <?php if (isset($_COOKIE['derniere_connexion'])): ?>
+          <span style='font-size:0.75rem;color:#888;white-space:nowrap;' title='Dernière connexion'>
+            <i class='bi bi-clock-history'></i>
+            <?= htmlspecialchars($_COOKIE['derniere_connexion']) ?>
+          </span>
+        <?php endif; ?>
+
         <!-- Bouton Admin -->
         <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
           <a href="<?= BASE_URL ?>admin/index.php" class="btn btn-secondary btn-sm">

@@ -98,6 +98,14 @@ if (isset($_SESSION['user_id'])) {
     $favorisProduits = $favStmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
+// Cookie 3 : Préférence d'affichage grille / liste (30 jours)
+if (isset($_GET['vue']) && in_array($_GET['vue'], ['grille', 'liste'])) {
+    setcookie('vue_produits', $_GET['vue'], time() + 60 * 60 * 24 * 30, '/', '', false, true);
+    $vueProduits = $_GET['vue'];
+} else {
+    $vueProduits = $_COOKIE['vue_produits'] ?? 'grille';
+}
+
 // Pour le navigateur
 $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAll(PDO::FETCH_ASSOC);
 $subcategories = [];
@@ -136,7 +144,16 @@ require_once __DIR__ . '/includes/header.php';
     <?php if (empty($produits)): ?>
         <div class="alert alert-info">Aucun produit trouvé.</div>
     <?php else: ?>
-        <div class="products-grid">
+        <!-- Boutons bascule vue grille / liste -->
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px;">
+            <a href="?<?= http_build_query(array_merge($_GET, ['vue'=>'grille'])) ?>"
+               class="btn-vue <?= $vueProduits==='grille' ? 'btn-vue-active' : '' ?>"
+               title="Vue grille"><i class="bi bi-grid-3x3-gap"></i> Grille</a>
+            <a href="?<?= http_build_query(array_merge($_GET, ['vue'=>'liste'])) ?>"
+               class="btn-vue <?= $vueProduits==='liste' ? 'btn-vue-active' : '' ?>"
+               title="Vue liste"><i class="bi bi-list-ul"></i> Liste</a>
+        </div>
+        <div class="<?= $vueProduits === 'liste' ? 'products-list' : 'products-grid' ?>">
             <?php foreach ($produits as $prod): ?>
                 <?php $enFavori = in_array($prod['id'], $favorisProduits); ?>
                 <div class="product-card">

@@ -38,6 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             session_regenerate_id(true);
 
+            // Cookie 1 : Mémoriser la dernière date de connexion (30 jours)
+            setcookie('derniere_connexion', date('d/m/Y à H:i'), time() + 60 * 60 * 24 * 30, '/', '', false, true);
+
+            // Cookie 2 : Remember me — mémoriser l'email si la case est cochée (30 jours)
+            if (!empty($_POST['remember_me'])) {
+                setcookie('remember_email', $email, time() + 60 * 60 * 24 * 30, '/', '', false, true);
+            } else {
+                setcookie('remember_email', '', time() - 3600, '/', '', false, true);
+            }
+
             header("Location: " . BASE_URL . ($user['role'] === 'admin' ? 'admin/index.php' : 'index.php'));
             exit();
         } else {
@@ -61,11 +71,15 @@ require_once __DIR__ . '/includes/header.php';
     <form method="POST">
         <div class="form-group">
             <label>Email</label>
-            <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required autofocus>
+            <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? $_COOKIE['remember_email'] ?? '') ?>" required autofocus>
         </div>
         <div class="form-group">
             <label>Mot de passe</label>
             <input type="password" name="password" required>
+        </div>
+        <div class="form-group" style="display:flex;align-items:center;gap:8px;margin-top:-8px;">
+            <input type="checkbox" name="remember_me" id="remember_me" value="1" <?php echo isset($_COOKIE['remember_email']) ? 'checked' : ''; ?>>
+            <label for="remember_me" style="margin:0;font-weight:normal;color:#555;">Se souvenir de moi</label>
         </div>
         <button type="submit" class="btn-primary" style="width:100%;">Se connecter</button>
     </form>

@@ -1852,3 +1852,45 @@ footer {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
+/* ── Cookies : boutons vue grille/liste ── */
+.btn-vue {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border: 1.5px solid #2e7d32;
+    border-radius: 6px;
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.88rem;
+    background: #fff;
+    transition: background .2s, color .2s;
+}
+.btn-vue:hover { background: #e8f5e9; }
+.btn-vue-active { background: #2e7d32 !important; color: #fff !important; }
+
+/* Vue liste */
+.products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.products-list .product-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+}
+.products-list .product-card .card-image-link img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.products-list .product-card .card-body {
+    flex: 1;
+}
