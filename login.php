@@ -7,7 +7,7 @@ $erreur = "";
 require_once __DIR__ . '/includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email    = trim($_POST['email']);
+    $email    = trim($_POST['email']);#trim:enléve les espaces
     $password = $_POST['password'];
 
     if (empty($email) || empty($password)) {
