@@ -11,7 +11,7 @@ $minPrice    = $_GET['min_price'] ?? '';
 $maxPrice    = $_GET['max_price'] ?? '';
 $recherche   = trim($_GET['q']    ?? '');
 
-// Traitement POST (Ajout Panier / Favoris)
+
 $msg = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user_id'])) {
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Construction requête dynamique
+
 $sql = "
     SELECT p.id, p.nom, b.nom AS marque,
            pv.prix AS prix_min,
@@ -90,7 +90,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupérer les favoris de l'utilisateur (tableau d'IDs)
+
 $favorisProduits = [];
 if (isset($_SESSION['user_id'])) {
     $favStmt = $pdo->prepare("SELECT product_id FROM favoris WHERE user_id = ?");
@@ -98,7 +98,7 @@ if (isset($_SESSION['user_id'])) {
     $favorisProduits = $favStmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
-// Cookie 3 : Préférence d'affichage grille / liste (30 jours)
+
 if (isset($_GET['vue']) && in_array($_GET['vue'], ['grille', 'liste'])) {
     setcookie('vue_produits', $_GET['vue'], time() + 60 * 60 * 24 * 30, '/', '', false, true);
     $vueProduits = $_GET['vue'];
@@ -106,7 +106,7 @@ if (isset($_GET['vue']) && in_array($_GET['vue'], ['grille', 'liste'])) {
     $vueProduits = $_COOKIE['vue_produits'] ?? 'grille';
 }
 
-// Pour le navigateur
+
 $categories = $pdo->query("SELECT * FROM categories ORDER BY position")->fetchAll(PDO::FETCH_ASSOC);
 $subcategories = [];
 if (!empty($categorieId)) {
@@ -144,7 +144,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php if (empty($produits)): ?>
         <div class="alert alert-info">Aucun produit trouvé.</div>
     <?php else: ?>
-        <!-- Boutons bascule vue grille / liste -->
+        
         <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px;">
             <a href="?<?= http_build_query(array_merge($_GET, ['vue'=>'grille'])) ?>"
                class="btn-vue <?= $vueProduits==='grille' ? 'btn-vue-active' : '' ?>"

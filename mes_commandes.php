@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/auth_check.php';
 $pageTitle = "Mes Achats - PharmaShop";
 require_once __DIR__ . '/includes/db.php';
 
-// Récupérer les commandes
+
 $cmdStmt = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY date_commande DESC");
 $cmdStmt->execute([$_SESSION['user_id']]);
 $commandes = $cmdStmt->fetchAll(PDO::FETCH_ASSOC);

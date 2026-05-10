@@ -14,26 +14,26 @@ if (!$produit) { header("Location: " . BASE_URL . "admin/produits.php"); exit();
 $categories = $pdo->query("SELECT * FROM categories ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
 $marques    = $pdo->query("SELECT * FROM brands ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
 
-// Charger variantes
+
 $vStmt = $pdo->prepare("SELECT * FROM product_variants WHERE product_id = ? ORDER BY prix");
 $vStmt->execute([$id]);
 $variantes = $vStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Charger images
+
 $iStmt = $pdo->prepare("SELECT * FROM product_images WHERE product_id = ? ORDER BY is_main DESC, id ASC");
 $iStmt->execute([$id]);
 $images = $iStmt->fetchAll(PDO::FETCH_ASSOC);
 
 $erreur = $succes = "";
 
-// Supprimer une variante
+
 if (isset($_GET['del_v'])) {
     $pdo->prepare("DELETE FROM product_variants WHERE id = ? AND product_id = ?")->execute([(int)$_GET['del_v'], $id]);
     header("Location: " . BASE_URL . "admin/modifier_produit.php?id=$id&msg=vsupp");
     exit();
 }
 
-// Supprimer une image
+
 if (isset($_GET['del_img'])) {
     $imgId = (int)$_GET['del_img'];
     $img = $pdo->prepare("SELECT image_path FROM product_images WHERE id = ? AND product_id = ?");
@@ -50,7 +50,7 @@ if (isset($_GET['del_img'])) {
     exit();
 }
 
-// Définir comme image principale
+
 if (isset($_GET['main_img'])) {
     $imgId = (int)$_GET['main_img'];
     $pdo->prepare("UPDATE product_images SET is_main = 0 WHERE product_id = ?")->execute([$id]);
@@ -59,7 +59,7 @@ if (isset($_GET['main_img'])) {
     exit();
 }
 
-// Mettre à jour les variantes
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_variantes'])) {
     if (!empty($_POST['variantes']) && is_array($_POST['variantes'])) {
         foreach ($_POST['variantes'] as $vId => $vData) {
@@ -68,14 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_variantes'])) {
             $pdo->prepare("UPDATE product_variants SET prix = ?, stock = ? WHERE id = ? AND product_id = ?")->execute([$prix, $stock, $vId, $id]);
         }
         $succes = "Variantes mises à jour avec succès.";
-        // Rafraîchir les données
+        
         $produit = $pdo->query("SELECT * FROM products WHERE id = $id")->fetch();
         $vStmt->execute([$id]);
         $variantes = $vStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
-// Modifier le produit
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_produit'])) {
     $nom         = trim($_POST['nom']);
     $description = trim($_POST['description']);
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['maj_produit'])) {
     }
 }
 
-// Ajouter une variante
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_variant'])) {
     $contenance = trim($_POST['contenance_v']);
     $prix       = (float)str_replace(',', '.', $_POST['prix_v']);
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_variant'])) {
     $variantes = $vStmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// Ajouter une image
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_image'])) {
     if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
         $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
@@ -160,7 +160,7 @@ require_once __DIR__ . '/../includes/admin_header.php';
         <?php endif; ?>
         <?php if ($erreur): ?><div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div><?php endif; ?>
 
-        <!-- Modifier produit -->
+        
         <div class="table-container" style="margin-bottom:25px; max-width:700px;">
             <h3 style="color:#2e7d32; margin-bottom:20px;">📋 Informations</h3>
             <form method="POST">
@@ -200,7 +200,7 @@ require_once __DIR__ . '/../includes/admin_header.php';
             </form>
         </div>
 
-        <!-- Images -->
+        
         <div class="table-container" style="margin-bottom:25px;">
             <h3 style="color:#2e7d32; margin-bottom:15px;">🖼️ Images du produit</h3>
             <?php if (empty($images)): ?>
@@ -244,7 +244,7 @@ require_once __DIR__ . '/../includes/admin_header.php';
             </form>
         </div>
 
-        <!-- Variantes -->
+        
         <div class="table-container">
             <h3 style="color:#2e7d32; margin-bottom:15px;">📏 Variantes</h3>
             <?php if (empty($variantes)): ?>

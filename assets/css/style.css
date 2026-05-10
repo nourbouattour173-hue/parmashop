@@ -1,10 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;700&display=swap');
 
-/* ============================================
-   VARIABLES & DESIGN TOKENS
-   ============================================ */
+
 :root {
-    /* Colors */
+    
     --color-primary: #7A9E87;
     --color-primary-dark: #4E7260;
     --color-primary-light: #9DBFA8;
@@ -31,7 +29,7 @@
     --color-text-light: #6B6B6B;
     --color-text-muted: #A0998C;
 
-    /* Typography */
+    
     --font-primary: 'DM Sans', 'Segoe UI', sans-serif;
     --font-secondary: 'Cormorant Garamond', Georgia, serif;
 
@@ -44,7 +42,7 @@
     --font-size-3xl: 1.875rem;
     --font-size-4xl: 2.25rem;
 
-    /* Spacing */
+    
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
@@ -53,33 +51,31 @@
     --spacing-2xl: 3rem;
     --spacing-3xl: 4rem;
 
-    /* Border Radius */
+    
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 18px;
     --radius-xl: 24px;
     --radius-full: 9999px;
 
-    /* Shadows */
+    
     --shadow-sm: 0 2px 4px rgba(78, 114, 96, 0.05), 0 1px 2px rgba(78, 114, 96, 0.1);
     --shadow-md: 0 10px 15px -3px rgba(78, 114, 96, 0.08), 0 4px 6px -2px rgba(78, 114, 96, 0.05);
     --shadow-lg: 0 20px 25px -5px rgba(78, 114, 96, 0.1), 0 10px 10px -5px rgba(78, 114, 96, 0.04);
     --shadow-xl: 0 25px 50px -12px rgba(78, 114, 96, 0.25);
 
-    /* Transitions */
+    
     --transition-fast: 0.2s cubic-bezier(0.23, 1, 0.32, 1);
     --transition-base: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     --transition-slow: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 
-    /* Layout */
+    
     --container-max: 1200px;
     --sidebar-width: 280px;
     --navbar-height: 72px;
 }
 
-/* ============================================
-   RESET & BASE
-   ============================================ */
+
 *,
 *::before,
 *::after {
@@ -106,7 +102,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -162,9 +158,7 @@ ul {
     width: 100%;
 }
 
-/* ============================================
-   NAVBAR
-   ============================================ */
+
 .navbar {
     background: rgba(249, 245, 239, 0.95);
     height: var(--navbar-height);
@@ -263,7 +257,7 @@ ul {
     font-size: var(--font-size-sm);
 }
 
-/* ── Bouton submit recherche ── */
+
 .search-submit-btn {
     border: none;
     background: none;
@@ -280,7 +274,7 @@ ul {
     color: var(--color-primary-dark);
 }
 
-/* ── Panier / Favoris ── */
+
 .cart-btn {
     position: relative;
     display: flex;
@@ -319,9 +313,7 @@ ul {
     justify-content: center;
 }
 
-/* ============================================
-   HAMBURGER
-   ============================================ */
+
 .hamburger-btn {
     display: none;
     flex-direction: column;
@@ -368,9 +360,7 @@ ul {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ============================================
-   BARRE CATÉGORIES
-   ============================================ */
+
 .category-bar {
     background: rgba(255, 255, 255, 0.92);
     border-bottom: 1px solid rgba(120, 143, 127, 0.16);
@@ -477,9 +467,7 @@ ul {
     transform: rotate(180deg);
 }
 
-/* ============================================
-   MEGA MENU — DESKTOP
-   ============================================ */
+
 .mega-menu {
     display: none;
     position: absolute;
@@ -593,9 +581,7 @@ ul {
     color: #1e5a46;
 }
 
-/* ============================================
-   OVERLAY MOBILE
-   ============================================ */
+
 .category-overlay {
     display: none;
     position: fixed;
@@ -612,9 +598,7 @@ ul {
 }
 
 
-/* ============================================
-   COMPONENTS: BUTTONS
-   ============================================ */
+
 .btn-primary,
 .btn-secondary,
 .btn-danger,
@@ -673,9 +657,7 @@ ul {
     font-size: 13px;
 }
 
-/* ============================================
-   COMPONENTS: CARDS & GRIDS
-   ============================================ */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -769,9 +751,7 @@ ul {
     transform: scale(1.1);
 }
 
-/* ============================================
-   COMPONENTS: TABLES & ALERTS
-   ============================================ */
+
 .table-container {
     background: var(--color-white);
     border-radius: var(--radius-lg);
@@ -829,9 +809,7 @@ table td {
     color: #0D47A1;
 }
 
-/* ============================================
-   COMPONENTS: FORMS
-   ============================================ */
+
 .form-group {
     margin-bottom: var(--spacing-md);
 }
@@ -878,9 +856,7 @@ select:focus {
     box-shadow: var(--shadow-lg);
 }
 
-/* ============================================
-   PAGE SPECIFIC: PRODUITS (Sidebar Layout)
-   ============================================ */
+
 .products-layout {
     display: grid;
     grid-template-columns: var(--sidebar-width) 1fr;
@@ -928,9 +904,7 @@ select:focus {
     font-size: 13px;
 }
 
-/* ============================================
-   PAGE SPECIFIC: DETAIL PRODUIT
-   ============================================ */
+
 .product-detail {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -995,9 +969,7 @@ select:focus {
     text-transform: uppercase;
 }
 
-/* ============================================
-   PAGE SPECIFIC: HOME (Hero, Advantages)
-   ============================================ */
+
 .hero {
     background: linear-gradient(135deg, #EEF5F0 0%, var(--color-bg) 50%, #F5ECD8 100%);
     padding: 80px 20px;
@@ -1037,9 +1009,7 @@ select:focus {
     margin-bottom: 15px;
 }
 
-/* ============================================
-   ADMIN STYLES
-   ============================================ */
+
 .admin-layout {
     display: grid;
     grid-template-columns: var(--sidebar-width) 1fr;
@@ -1116,16 +1086,14 @@ select:focus {
     color: #1565C0;
 }
 
-/* ============================================
-   UTILITIES & RESPONSIVE
-   ============================================ */
+
 .section-title {
     margin: 40px 0 30px;
     padding-left: 15px;
     border-left: 5px solid var(--color-primary);
 }
 
-/* Category Pills */
+
 .category-pills {
     display: flex;
     flex-wrap: wrap;
@@ -1150,7 +1118,7 @@ select:focus {
     transform: translateY(-2px);
 }
 
-/* Utilities */
+
 .flex {
     display: flex;
 }
@@ -1252,7 +1220,7 @@ select:focus {
         --navbar-height: 62px;
     }
 
-    /* Navbar */
+    
     .navbar-search {
         display: none;
     }
@@ -1277,7 +1245,7 @@ select:focus {
         display: none;
     }
 
-    /* Products grid */
+    
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1286,7 +1254,7 @@ select:focus {
         font-size: 2.5rem;
     }
 
-    /* Category bar → drawer */
+    
     .category-bar {
         position: fixed;
         top: 0;
@@ -1380,7 +1348,7 @@ select:focus {
         border-left-color: var(--color-primary);
     }
 
-    /* Mega menu → accordion */
+    
     .mega-menu {
         display: block;
         position: static;
@@ -1466,11 +1434,9 @@ select:focus {
     }
 }
 
-/* ============================================
-   TASK 1 OVERHAUL — SOFTER, WARMER UI
-   ============================================ */
 
-/* Slightly warmer card appearance */
+
+
 .product-card {
     box-shadow: 0 4px 18px rgba(78, 114, 96, 0.07), 0 1px 4px rgba(78, 114, 96, 0.06);
 }
@@ -1479,7 +1445,7 @@ select:focus {
     box-shadow: 0 20px 48px rgba(78, 114, 96, 0.15), 0 6px 16px rgba(78, 114, 96, 0.08);
 }
 
-/* Softer inputs */
+
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -1490,7 +1456,7 @@ select {
     border-radius: 14px;
 }
 
-/* Advantage cards — more depth */
+
 .advantage-card {
     box-shadow: 0 6px 24px rgba(78, 114, 96, 0.08);
     transition: all var(--transition-base);
@@ -1506,16 +1472,14 @@ select {
     color: var(--color-primary-dark);
 }
 
-/* Warmer hero bottom border */
+
 .hero {
     box-shadow: 0 8px 32px rgba(78, 114, 96, 0.08);
 }
 
-/* ============================================
-   TASK 2 — FAVORITES: ACTIVE (RED) STATE
-   ============================================ */
 
-/* Active / already-in-favorites state — vibrant red */
+
+
 .btn-favorite--active {
     background: #fce4ec !important;
     border-color: #e91e63 !important;
@@ -1530,7 +1494,7 @@ select {
     transform: scale(1.1);
 }
 
-/* Larger favorite button for detail page */
+
 .btn-favorite--large {
     width: auto !important;
     padding: 10px 22px !important;
@@ -1541,7 +1505,7 @@ select {
     align-items: center;
 }
 
-/* Smooth heart pop animation */
+
 @keyframes heartPop {
     0% {
         transform: scale(1);
@@ -1560,7 +1524,7 @@ select {
     }
 }
 
-/* Detail page action row */
+
 .detail-actions {
     display: flex;
     gap: 12px;
@@ -1568,15 +1532,11 @@ select {
     margin-top: 16px;
 }
 
-/* ============================================
-   TASK 3 — NAVBAR: À PROPOS + MON ÉQUIPE
-   ============================================ */
 
-/* ============================================
-   TASK 4 — ADMIN: MESSAGES PAGE
-   ============================================ */
 
-/* Unread rows */
+
+
+
 .message-row--unread {
     background: #fdf8f2;
     font-weight: 600;
@@ -1586,13 +1546,13 @@ select {
     border-left: 3px solid var(--color-accent);
 }
 
-/* Unread badge dot */
+
 .badge-unread {
     color: var(--color-danger);
     font-size: 10px;
 }
 
-/* Messages count badge in heading */
+
 .badge-messages {
     background: var(--color-danger);
     color: #fff;
@@ -1603,7 +1563,7 @@ select {
     vertical-align: middle;
 }
 
-/* Message detail card */
+
 .message-detail-card {
     background: var(--color-white);
     border-radius: var(--radius-xl);
@@ -1650,7 +1610,7 @@ select {
     gap: 12px;
 }
 
-/* btn-secondary (used in messages page) */
+
 .btn-secondary {
     background: var(--color-primary-xlight);
     color: var(--color-primary-dark);
@@ -1662,7 +1622,7 @@ select {
     color: var(--color-white);
 }
 
-/* Badges Client */
+
 .badge-client {
     display: inline-block;
     padding: 6px 14px;
@@ -1673,9 +1633,7 @@ select {
     color: var(--color-primary-dark);
 }
 
-/* ============================================
-   FOOTER ENHANCED
-   ============================================ */
+
 footer {
     background: #1D352F;
     color: #D1D8D4;
@@ -1775,9 +1733,7 @@ footer {
     transform: translateY(-3px);
 }
 
-/* ============================================
-   PROFILE ENHANCED
-   ============================================ */
+
 .profile-card {
     background: white;
     border-radius: 20px;
@@ -1817,7 +1773,7 @@ footer {
 }
 
 
-/* Back-to-top */
+
 .back-to-top {
     position: fixed !important;
     bottom: 40px !important;
@@ -1852,7 +1808,7 @@ footer {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
-/* ── Cookies : boutons vue grille/liste ── */
+
 .btn-vue {
     display: inline-flex;
     align-items: center;
@@ -1869,7 +1825,7 @@ footer {
 .btn-vue:hover { background: #e8f5e9; }
 .btn-vue-active { background: #2e7d32 !important; color: #fff !important; }
 
-/* Vue liste */
+
 .products-list {
     display: flex;
     flex-direction: column;

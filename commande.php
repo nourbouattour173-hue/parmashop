@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($adresse)) {
         $erreur = "Veuillez saisir une adresse de livraison.";
     } else {
-        // Créer la commande
+        
         $pdo->prepare("
             INSERT INTO orders (user_id, total, adresse_livraison, methode_paiement, note_commande, statut)
             VALUES (?, ?, ?, ?, ?, 'en_attente')
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $orderId = $pdo->lastInsertId();
 
-        // Insérer les articles et baisser le stock
+        
         foreach ($panier as $item) {
             $pdo->prepare("INSERT INTO order_items (order_id, variant_id, quantite, prix_unitaire) VALUES (?,?,?,?)")
                 ->execute([$orderId, $item['variant_id'], $item['quantite'], $item['prix']]);

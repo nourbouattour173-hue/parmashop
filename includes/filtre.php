@@ -1,9 +1,9 @@
 <?php
-// On récupère les marques et types de peau pour les afficher dans les sélecteurs
+
 $marques    = $pdo->query("SELECT * FROM brands ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
 $skin_types = $pdo->query("SELECT * FROM skin_types ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
 
-// Valeurs actuelles
+
 $brandId    = $_GET['marque']    ?? '';
 $skinTypeId = $_GET['skin_type'] ?? '';
 $recherche  = $_GET['q']         ?? '';
@@ -14,7 +14,7 @@ $subcatId    = $_GET['sous_categorie'] ?? '';
 ?>
 
 <form method="GET" class="filters-sidebar">
-    <!-- On garde les paramètres de navigation cachés pour ne pas les perdre -->
+    
     <input type="hidden" name="categorie" value="<?= htmlspecialchars($categorieId) ?>">
     <input type="hidden" name="sous_categorie" value="<?= htmlspecialchars($subcatId) ?>">
 

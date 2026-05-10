@@ -1,17 +1,5 @@
 <?php
-/**
- * admin/messages.php
- * Gestion des messages clients (table contact_messages)
- * 
- * Structure de la table contact_messages :
- *   id INT AUTO_INCREMENT PRIMARY KEY,
- *   nom VARCHAR(100),
- *   email VARCHAR(150),
- *   sujet VARCHAR(200),
- *   message TEXT,
- *   lu TINYINT(1) DEFAULT 0,
- *   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
- */
+
 
 require_once __DIR__ . '/../includes/admin_check.php';
 $pageTitle = "Messages clients - PharmaShop";
@@ -19,7 +7,7 @@ require_once __DIR__ . '/../includes/db.php';
 
 $msg_action = "";
 
-// --- Traitement des actions POST ---
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action    = $_POST['action']     ?? '';
     $messageId = (int)($_POST['id']   ?? 0);
@@ -36,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Récupérer tous les messages, les non-lus en premier
+
 $messages = $pdo->query("
     SELECT * FROM contact_messages
     ORDER BY lu ASC, created_at DESC
@@ -44,7 +32,7 @@ $messages = $pdo->query("
 
 $nbNonLus = $pdo->query("SELECT COUNT(*) FROM contact_messages WHERE lu = 0")->fetchColumn();
 
-// Message sélectionné pour affichage complet (via GET)
+
 $messageSelectionne = null;
 if (isset($_GET['voir'])) {
     $voirId = (int)$_GET['voir'];
@@ -52,7 +40,7 @@ if (isset($_GET['voir'])) {
     $vStmt->execute([$voirId]);
     $messageSelectionne = $vStmt->fetch(PDO::FETCH_ASSOC);
 
-    // Marquer automatiquement comme lu à l'ouverture
+    
     if ($messageSelectionne && $messageSelectionne['lu'] == 0) {
         $pdo->prepare("UPDATE contact_messages SET lu = 1 WHERE id = ?")->execute([$voirId]);
         $messageSelectionne['lu'] = 1;
@@ -84,9 +72,7 @@ require_once __DIR__ . '/../includes/admin_header.php';
         <?php endif; ?>
 
         <?php if ($messageSelectionne): ?>
-            <!-- ================================================
-                 VUE DÉTAIL D'UN MESSAGE
-                 ================================================ -->
+            
             <div class="message-detail-card">
                 <div class="message-detail-header">
                     <div>
@@ -139,9 +125,7 @@ require_once __DIR__ . '/../includes/admin_header.php';
             </div>
 
         <?php else: ?>
-            <!-- ================================================
-                 LISTE DES MESSAGES
-                 ================================================ -->
+            
             <?php if (empty($messages)): ?>
                 <div class="alert alert-info">
                     <i class="bi bi-inbox"></i> Aucun message reçu pour le moment.
@@ -181,13 +165,13 @@ require_once __DIR__ . '/../includes/admin_header.php';
                                     </td>
                                     <td>
                                         <div class="flex gap-sm">
-                                            <!-- Voir le message complet -->
+                                            
                                             <a href="<?= BASE_URL ?>admin/messages.php?voir=<?= $m['id'] ?>"
                                                class="btn-primary btn-sm">
                                                 <i class="bi bi-eye"></i> Voir
                                             </a>
 
-                                            <!-- Marquer lu / non lu -->
+                                            
                                             <form method="POST" style="display:inline;">
                                                 <input type="hidden" name="id" value="<?= $m['id'] ?>">
                                                 <?php if ($m['lu']): ?>
@@ -203,7 +187,7 @@ require_once __DIR__ . '/../includes/admin_header.php';
                                                 <?php endif; ?>
                                             </form>
 
-                                            <!-- Supprimer -->
+                                            
                                             <form method="POST" style="display:inline;"
                                                   onsubmit="return confirm('Supprimer ce message ?')">
                                                 <input type="hidden" name="id" value="<?= $m['id'] ?>">

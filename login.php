@@ -18,17 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-// removed stray opening PHP tag
+
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['nom']     = $user['nom'];
             $_SESSION['email']   = $user['email'];
             $_SESSION['role']    = $user['role'];
 
-            // Set session cookie lifetime based on role
-            // 0 means until browser is closed
+            
+            
             $expire = ($user['role'] === 'admin') ? 0 : time() + (2 * 24 * 60 * 60);
             
-            // Update the session cookie with the correct lifetime
+            
             setcookie(session_name(), session_id(), [
                 'expires' => $expire,
                 'path' => '/',
@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             session_regenerate_id(true);
 
-            // Cookie 1 : Mémoriser la dernière date de connexion (30 jours)
+            
             setcookie('derniere_connexion', date('d/m/Y à H:i'), time() + 60 * 60 * 24 * 30, '/', '', false, true);
 
-            // Cookie 2 : Remember me — mémoriser l'email si la case est cochée (30 jours)
+            
             if (!empty($_POST['remember_me'])) {
                 setcookie('remember_email', $email, time() + 60 * 60 * 24 * 30, '/', '', false, true);
             } else {
