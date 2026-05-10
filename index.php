@@ -77,7 +77,7 @@ $produits = $pdo->query("
     SELECT p.id, p.nom, b.nom AS marque,
            pv.prix AS prix_min,
            pv.id AS variant_id,
-           (SELECT image_path FROM product_images WHERE product_id = p.id LIMIT 1) AS image
+           (SELECT image_path FROM product_images WHERE product_id = p.id ORDER BY is_main DESC, id ASC LIMIT 1) AS image
     FROM products p
     LEFT JOIN brands b ON p.brand_id = b.id
     LEFT JOIN product_variants pv ON pv.id = (

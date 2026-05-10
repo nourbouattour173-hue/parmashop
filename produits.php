@@ -62,7 +62,7 @@ $sql = "
            pv.prix AS prix_min,
            pv.id AS variant_id,
            c.nom AS categorie,
-           (SELECT image_path FROM product_images WHERE product_id = p.id LIMIT 1) AS image
+           (SELECT image_path FROM product_images WHERE product_id = p.id ORDER BY is_main DESC, id ASC LIMIT 1) AS image
     FROM products p
     LEFT JOIN brands b ON p.brand_id = b.id
     LEFT JOIN categories c ON p.category_id = c.id

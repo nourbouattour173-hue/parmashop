@@ -74,4 +74,4 @@ require_once __DIR__ . '/../includes/admin_header.php';
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../includes/admin_footer.php'; ?>
