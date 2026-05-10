@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/auth_check.php';
 $pageTitle = "Commande - PharmaShop";
 require_once __DIR__ . '/includes/db.php';
 
-$panier = $_SESSION['panier'] ?? [];#sion table vide
+$panier = $_SESSION['panier'] ?? [];
 if (empty($panier)) { header("Location: " . BASE_URL . "panier.php"); exit(); }
 
 $total = 0;
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($panier as $item) {
             $pdo->prepare("INSERT INTO order_items (order_id, variant_id, quantite, prix_unitaire) VALUES (?,?,?,?)")
                 ->execute([$orderId, $item['variant_id'], $item['quantite'], $item['prix']]);
-            $pdo->prepare("UPDATE product_variants SET stock = stock - ? WHERE id = ?")#baisser le stock
+            $pdo->prepare("UPDATE product_variants SET stock = stock - ? WHERE id = ?")
                 ->execute([$item['quantite'], $item['variant_id']]);
         }
 
