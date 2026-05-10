@@ -1050,9 +1050,13 @@ select:focus {
     background: var(--color-secondary);
     color: white;
     padding: 40px 0;
+    position: -webkit-sticky;
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 72px;
+    height: calc(100vh - 72px);
+    align-self: start;
+    overflow-y: auto;
+    z-index: 100;
 }
 
 .sidebar-logo {
@@ -1815,9 +1819,9 @@ footer {
 
 /* Back-to-top */
 .back-to-top {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
+    position: fixed !important;
+    bottom: 40px !important;
+    right: 40px !important;
     width: 55px;
     height: 55px;
     background: var(--color-primary-dark);
@@ -1832,7 +1836,7 @@ footer {
     visibility: hidden;
     transform: translateY(30px);
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    z-index: 2000;
+    z-index: 9999 !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     border: 2px solid white;
 }
